@@ -8,6 +8,7 @@ import com.test.backend.developer.test_backend_nahuel.models.views.CandidateDTO;
 import com.test.backend.developer.test_backend_nahuel.repositories.CandidateRepository;
 import com.test.backend.developer.test_backend_nahuel.services.CandidateService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,11 +19,13 @@ public class CandidateServiceImpl implements CandidateService {
     private CandidateRepository candidateRepository;
 
     @Override
+    @Transactional
     public Boolean create(CandidateDTO candidateDTO) throws CandidateExistsException {
         return upload(candidateDTO);
     }
 
     @Override
+    @Transactional
     public Boolean upload(CandidateDTO candidateDTO) throws CandidateExistsException {
         List<Candidate> listCandidate = candidateRepository.findAll();
         if(listCandidate.stream().anyMatch(
@@ -42,6 +45,7 @@ public class CandidateServiceImpl implements CandidateService {
     }
 
     @Override
+    @Transactional
     public Boolean update(CandidateDTO candidateDTO) throws CandidateNotExistsException {
         Optional<Candidate> resp = candidateRepository.findById(candidateDTO.getId());
 
@@ -61,6 +65,7 @@ public class CandidateServiceImpl implements CandidateService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Candidate findByDocument(String document) throws CandidateNotExistsException, CandidateDocException {
         validateDoc(document);
         Candidate candidate;
@@ -73,11 +78,13 @@ public class CandidateServiceImpl implements CandidateService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Candidate> findAll() {
         return candidateRepository.findAll();
     }
 
     @Override
+    @Transactional
     public void delete(Long id) throws CandidateNotExistsException {
         if (candidateRepository.findById(id).isPresent()) {
             candidateRepository.deleteById(id);
