@@ -1,0 +1,18 @@
+package com.test.backend.developer.test_backend_nahuel.services;
+
+import com.test.backend.developer.test_backend_nahuel.models.entities.Technology;
+import com.test.backend.developer.test_backend_nahuel.models.views.TechnologyDTO;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public interface TechnologyService {
+
+    Boolean create(TechnologyDTO technologyDTO);
+    Boolean upload(TechnologyDTO technologyDTO);
+    Technology findById(Long techId);
+    List<Technology> findAll();
+    void delete(Long id);
+
+}
