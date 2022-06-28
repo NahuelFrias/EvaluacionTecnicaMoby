@@ -14,12 +14,19 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
 
 @Service
 public class CandidateServiceImpl implements CandidateService {
 
     @Autowired
     private CandidateRepository candidateRepository;
+
+    /*
+    FileHandler handler = new FileHandler("src/main/resource/logs.log", true);
+    Logger logger = Logger.getLogger("candidateService");
+    logger.addHandler(handler);*/
 
     @Override
     @Transactional
