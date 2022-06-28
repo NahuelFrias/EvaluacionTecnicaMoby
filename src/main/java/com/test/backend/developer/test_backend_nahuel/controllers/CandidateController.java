@@ -39,7 +39,6 @@ public class CandidateController {
     @GetMapping("/findByDocument/{candidateDoc}")
     public ResponseEntity<Candidate> findByDocument (@PathVariable String document) throws CandidateDocException, CandidateNotExistsException {
         return new ResponseEntity<>(candidateService.findByDocument(document), HttpStatus.OK);
-
     }
 
     @GetMapping("/listCandidate")

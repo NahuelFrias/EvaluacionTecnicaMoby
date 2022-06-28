@@ -7,11 +7,13 @@ import com.test.backend.developer.test_backend_nahuel.models.views.TechnologyDTO
 import com.test.backend.developer.test_backend_nahuel.repositories.TechnologyRepository;
 import com.test.backend.developer.test_backend_nahuel.services.TechnologyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class TechnologyServiceImpl implements TechnologyService {
 
     @Autowired
