@@ -1,6 +1,5 @@
 package com.test.backend.developer.test_backend_nahuel.services.impl;
 
-import com.test.backend.developer.test_backend_nahuel.exceptions.CandidateNotExistsException;
 import com.test.backend.developer.test_backend_nahuel.exceptions.CandidateTechnologiesExistsException;
 import com.test.backend.developer.test_backend_nahuel.exceptions.TechnologyNotExistsException;
 import com.test.backend.developer.test_backend_nahuel.models.entities.Candidate;
