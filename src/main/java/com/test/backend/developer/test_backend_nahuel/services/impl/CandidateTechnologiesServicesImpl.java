@@ -81,18 +81,6 @@ public class CandidateTechnologiesServicesImpl implements CandidateTechnologiesS
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public List<CandidateTechnologies> findByName(String techName) {
-        return candidateTechnologiesRepository.findByTechnologyName(techName);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<CandidateTechnologies> findByTechVersion(String techName, String techVersion) {
-        return candidateTechnologiesRepository.findByTechnologyNameAndVersion(techName, techVersion);
-    }
-
-    @Override
     @Transactional
     public void delete(Long id) throws TechnologyNotExistsException {
         Optional<CandidateTechnologies> candidateTechnologies = candidateTechnologiesRepository.findById(id);

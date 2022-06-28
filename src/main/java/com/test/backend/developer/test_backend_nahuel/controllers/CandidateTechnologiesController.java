@@ -10,7 +10,6 @@ import com.test.backend.developer.test_backend_nahuel.services.CandidateTechnolo
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,17 +42,6 @@ public class CandidateTechnologiesController {
         return new ResponseEntity<>(candidateTechnologiesService.findById(candidateTechnologiesId), HttpStatus.OK);
     }
 
-    @GetMapping("/candidateTechnologiesName/{technologyName}")
-    public ResponseEntity<List<CandidateTechnologies>> findByName(@PathVariable String techName) {
-        return new ResponseEntity<>(candidateTechnologiesService.findByName(techName), HttpStatus.OK);
-    }
-
-    @GetMapping("/candidateTechnologiesName/{techName}/{techVersion}")
-    public ResponseEntity<List<CandidateTechnologies>> findByTechVersion(@PathVariable String techName,
-                                                                         @PathVariable String techVersion) {
-        return new ResponseEntity<>(candidateTechnologiesService.
-                findByTechVersion(techName, techVersion), HttpStatus.OK);
-    }
     @DeleteMapping("/delete/{candidateTechnologiesId}")
     public ResponseEntity<HttpStatus> deleteById (@PathVariable Long id) throws TechnologyNotExistsException, CandidateNotExistsException {
         candidateTechnologiesService.delete(id);

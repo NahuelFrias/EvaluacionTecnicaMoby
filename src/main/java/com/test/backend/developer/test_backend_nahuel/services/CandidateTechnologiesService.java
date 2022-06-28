@@ -17,7 +17,5 @@ public interface CandidateTechnologiesService {
     Boolean upload(CandidateTechnologiesDTO candidateTechnologiesDTO) throws CandidateExistsException, CandidateTechnologiesExistsException;
     CandidateTechnologies findById (Long id) throws TechnologyNotExistsException;
     List<CandidateTechnologies> findAll ();
-    List<CandidateTechnologies> findByName (String techName);
-    List<CandidateTechnologies> findByTechVersion (String techName, String techVersion);
     void delete(Long id) throws CandidateNotExistsException, TechnologyNotExistsException;
 }
