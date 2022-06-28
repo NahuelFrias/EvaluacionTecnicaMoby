@@ -9,7 +9,6 @@ import static com.test.backend.developer.test_backend_nahuel.utils.Querys.FIND_T
 
 @Repository
 public interface TechnologyRepository extends JpaRepository<Technology, Long> {
-
     @Query(value = FIND_TECHNOLOGY_NAME_AND_VERSION,nativeQuery = true)
     Technology findNameAndVersion(String name, String version);
 }

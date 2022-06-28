@@ -9,7 +9,6 @@ import static com.test.backend.developer.test_backend_nahuel.utils.Querys.FIND_B
 
 @Repository
 public interface CandidateTechnologiesRepository extends JpaRepository<CandidateTechnologies, Long> {
-
     @Query(value = FIND_BY_CANDIDATE_ID_AND_TECHNOLOGY_ID, nativeQuery = true)
     CandidateTechnologies findByCandidateIdAndTechnologyId(Long candidateId, Long technologyId);
 }
