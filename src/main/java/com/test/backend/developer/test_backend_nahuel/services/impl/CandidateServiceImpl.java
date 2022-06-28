@@ -8,25 +8,21 @@ import com.test.backend.developer.test_backend_nahuel.models.views.CandidateDTO;
 import com.test.backend.developer.test_backend_nahuel.repositories.CandidateRepository;
 import com.test.backend.developer.test_backend_nahuel.services.CandidateService;
 
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.FileHandler;
-import java.util.logging.Logger;
 
 @Service
+@Slf4j
 public class CandidateServiceImpl implements CandidateService {
 
     @Autowired
     private CandidateRepository candidateRepository;
-
-    /*
-    FileHandler handler = new FileHandler("src/main/resource/logs.log", true);
-    Logger logger = Logger.getLogger("candidateService");
-    logger.addHandler(handler);*/
 
     @Override
     @Transactional
@@ -50,6 +46,7 @@ public class CandidateServiceImpl implements CandidateService {
                     .birthdate(candidateDTO.getBirthdate())
                     .build();
             candidateRepository.save(candidate);
+            log.info("Candidato creado satisfactoriamente.");
         }
         return true;
     }
@@ -68,6 +65,7 @@ public class CandidateServiceImpl implements CandidateService {
             candidate.setBirthdate(candidateDTO.getBirthdate());
 
             candidateRepository.save(candidate);
+            log.info("Candidato actualizado.");
             return true;
         } else {
             throw new CandidateNotExistsException("No se encontro el candidato.");
@@ -98,12 +96,12 @@ public class CandidateServiceImpl implements CandidateService {
     public void delete(Long id) throws CandidateNotExistsException {
         if (candidateRepository.findById(id).isPresent()) {
             candidateRepository.deleteById(id);
+            log.info("Candidato eliminado.");
         }else{
             throw new CandidateNotExistsException("El candidato con id " + id + "no existe en la base de datos.");
         }
     }
     public void validateDoc(String doc) throws CandidateDocException {
-
         if (doc == null || doc.length()<8) {
             throw new CandidateDocException("Documento mal ingresado.");
         }

@@ -9,6 +9,7 @@ import com.test.backend.developer.test_backend_nahuel.models.entities.Technology
 import com.test.backend.developer.test_backend_nahuel.models.views.CandidateTechnologiesDTO;
 import com.test.backend.developer.test_backend_nahuel.repositories.CandidateTechnologiesRepository;
 import com.test.backend.developer.test_backend_nahuel.services.CandidateTechnologiesService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class CandidateTechnologiesServicesImpl implements CandidateTechnologiesService {
 
     @Autowired
@@ -54,6 +56,7 @@ public class CandidateTechnologiesServicesImpl implements CandidateTechnologiesS
                             .experience(candidateTechnologiesDTO.getExperience())
                             .build()
             );
+            log.info("Tecnologia asociada al candidato creada.");
         }
         return true;
     }
@@ -95,6 +98,7 @@ public class CandidateTechnologiesServicesImpl implements CandidateTechnologiesS
         Optional<CandidateTechnologies> candidateTechnologies = candidateTechnologiesRepository.findById(id);
         if (candidateTechnologies.isPresent()) {
             candidateTechnologiesRepository.deleteById(id);
+            log.info("Tecnologia asociada al candidato eliminada.");
         } else {
             throw new TechnologyNotExistsException("Esta tecnologia relacionada al candidato no existe.");
         }

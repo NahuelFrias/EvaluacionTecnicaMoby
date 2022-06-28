@@ -6,6 +6,7 @@ import com.test.backend.developer.test_backend_nahuel.models.entities.Technology
 import com.test.backend.developer.test_backend_nahuel.models.views.TechnologyDTO;
 import com.test.backend.developer.test_backend_nahuel.repositories.TechnologyRepository;
 import com.test.backend.developer.test_backend_nahuel.services.TechnologyService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class TechnologyServiceImpl implements TechnologyService {
 
     @Autowired
@@ -37,6 +39,7 @@ public class TechnologyServiceImpl implements TechnologyService {
                     .version(technologyDTO.getVersion())
                     .build();
             technologyRepository.save(technology);
+            log.info("Tecnologia creada satisfactoriamente.");
         }
         return true;
     }
@@ -52,6 +55,7 @@ public class TechnologyServiceImpl implements TechnologyService {
             technology.setVersion(technologyDTO.getVersion());
 
             technologyRepository.save(technology);
+            log.info("Tecnologia actualizada.");
             return true;
         } else {
             throw new TechnologyNotExistsException("No se encontro la tecnologia.");
@@ -83,6 +87,7 @@ public class TechnologyServiceImpl implements TechnologyService {
         Optional<Technology> resp = technologyRepository.findById(id);
         if (resp.isPresent()) {
             technologyRepository.deleteById(id);
+            log.info("Tecnologia eliminada.");
         } else {
             throw new TechnologyNotExistsException("No se encontro la tecnologia.");
         }
