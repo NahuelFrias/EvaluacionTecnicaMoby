@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
@@ -23,10 +24,13 @@ public class Technology implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "technology_id")
+    @Column(name = "id")
     private Long id;
-    @Column(name = "technology_name")
+
+    @Column(name = "name")
+    @NotNull
     private String name;
-    @Column(name = "technology_version")
+
+    @Column(name = "version")
     private String version;
 }

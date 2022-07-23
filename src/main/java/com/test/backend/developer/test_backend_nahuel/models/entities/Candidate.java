@@ -1,6 +1,11 @@
 package com.test.backend.developer.test_backend_nahuel.models.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+
+
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import com.test.backend.developer.test_backend_nahuel.models.enums.DocumentType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,18 +31,29 @@ public class Candidate implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "candidate_id")
+    @Column(name = "id")
     private Long id;
-    @Column(name = "candidate_name")
+
+    @Column(name = "name")
+    @NotNull
     private String name;
-    @Column(name = "candidate_lastname")
-    private String lastname;
+
+    @Column(name = "lastname")
+    @NotNull
+    private String lastName;
+
     @Column(name = "document_type")
+    @NotNull
     private DocumentType documentType;
+
     @Column(name = "num_document")
+    @NotNull
+    @Min(value = 7, message = "El documento no puede tener menos de 7 digitos")
+    @Max(value = 8, message = "El documento no puede tener mas de 8 digitos")
     private String numDocument;
+
     @Column(name = "birthdate")
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate birthdate;
+    private LocalDate birthDate;
 
 }

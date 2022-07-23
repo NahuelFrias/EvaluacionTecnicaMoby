@@ -25,14 +25,17 @@ public class CandidateTechnologies implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "candidate_technologies_id")
+    @Column(name = "id")
     private Long id;
+
     @ManyToOne
     @JoinColumn(name = "candidate_id", referencedColumnName = "candidate_id")
     private Candidate candidate;
     @ManyToOne
+
     @JoinColumn(name = "technology_id", referencedColumnName = "technology_id")
     private Technology technology;
+
     @Column(name = "experience")
     private Integer experience;
 }
