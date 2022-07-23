@@ -1,6 +1,5 @@
 package com.test.backend.developer.test_backend_nahuel.services.impl;
 
-import com.test.backend.developer.test_backend_nahuel.exceptions.CandidateDocException;
 import com.test.backend.developer.test_backend_nahuel.exceptions.CandidateExistsException;
 import com.test.backend.developer.test_backend_nahuel.exceptions.CandidateNotExistsException;
 import com.test.backend.developer.test_backend_nahuel.models.entities.Candidate;
@@ -9,7 +8,6 @@ import com.test.backend.developer.test_backend_nahuel.repositories.CandidateRepo
 import com.test.backend.developer.test_backend_nahuel.services.CandidateService;
 
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,26 +25,20 @@ public class CandidateServiceImpl implements CandidateService {
     @Override
     @Transactional
     public Boolean create(CandidateDTO candidateDTO) throws CandidateExistsException {
-        return upload(candidateDTO);
-    }
-
-    @Override
-    @Transactional
-    public Boolean upload(CandidateDTO candidateDTO) throws CandidateExistsException {
         List<Candidate> listCandidate = candidateRepository.findAll();
         if(listCandidate.stream().anyMatch(
                 candidate -> candidate.getNumDocument().equals(candidateDTO.getNumDocument())
-        )){ throw new CandidateExistsException("El candidato con documento " + candidateDTO.getNumDocument() + " ya existe!");
+        )){ throw new CandidateExistsException("The candidate with document " + candidateDTO.getNumDocument() + " already exists!");
         } else {
             Candidate candidate = Candidate.builder()
                     .name(candidateDTO.getName())
-                    .lastname(candidateDTO.getLastname())
+                    .lastName(candidateDTO.getLastName())
                     .documentType(candidateDTO.getDocumentType())
                     .numDocument(candidateDTO.getNumDocument())
-                    .birthdate(candidateDTO.getBirthdate())
+                    .birthDate(candidateDTO.getBirthDate())
                     .build();
             candidateRepository.save(candidate);
-            log.info("Candidato creado satisfactoriamente.");
+            log.info("Candidate successfully created.");
         }
         return true;
     }
@@ -54,33 +46,32 @@ public class CandidateServiceImpl implements CandidateService {
     @Override
     @Transactional
     public Boolean update(CandidateDTO candidateDTO) throws CandidateNotExistsException {
-        Optional<Candidate> resp = candidateRepository.findById(candidateDTO.getId());
+        Optional<Candidate> candidateOptional = candidateRepository.findById(candidateDTO.getId());
 
-        if (resp.isPresent()) {
-            Candidate candidate = resp.get();
+        if (candidateOptional.isPresent()) {
+            Candidate candidate = candidateOptional.get();
             candidate.setName(candidateDTO.getName());
-            candidate.setLastname(candidateDTO.getLastname());
+            candidate.setLastName(candidateDTO.getLastName());
             candidate.setDocumentType(candidateDTO.getDocumentType());
             candidate.setNumDocument(candidateDTO.getNumDocument());
-            candidate.setBirthdate(candidateDTO.getBirthdate());
+            candidate.setBirthDate(candidateDTO.getBirthDate());
 
             candidateRepository.save(candidate);
-            log.info("Candidato actualizado.");
+            log.info("Updated candidate.");
             return true;
         } else {
-            throw new CandidateNotExistsException("No se encontro el candidato.");
+            throw new CandidateNotExistsException("Candidate not found.");
         }
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Candidate findByDocument(String document) throws CandidateNotExistsException, CandidateDocException {
-        validateDoc(document);
+    public Candidate findByDocument(String document) throws CandidateNotExistsException {
         Candidate candidate;
         if (candidateRepository.findByDocument(document) != null) {
             candidate = candidateRepository.findByDocument(document);
         } else {
-            throw new CandidateNotExistsException("El candidato con documento " + document + " no existe!");
+            throw new CandidateNotExistsException("The candidate with document " + document + " does not exist!");
         }
         return candidate;
     }
@@ -96,14 +87,9 @@ public class CandidateServiceImpl implements CandidateService {
     public void delete(Long id) throws CandidateNotExistsException {
         if (candidateRepository.findById(id).isPresent()) {
             candidateRepository.deleteById(id);
-            log.info("Candidato eliminado.");
-        }else{
-            throw new CandidateNotExistsException("El candidato con id " + id + "no existe en la base de datos.");
-        }
-    }
-    public void validateDoc(String doc) throws CandidateDocException {
-        if (doc == null || doc.length()<8) {
-            throw new CandidateDocException("Documento mal ingresado.");
+            log.info("Eliminated candidate.");
+        } else {
+            throw new CandidateNotExistsException("Candidate with id " + id + "does not exist.");
         }
     }
 }

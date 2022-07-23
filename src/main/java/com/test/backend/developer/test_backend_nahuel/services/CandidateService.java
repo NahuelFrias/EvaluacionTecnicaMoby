@@ -13,7 +13,6 @@ import java.util.List;
 public interface CandidateService {
 
     Boolean create(CandidateDTO candidateDTO) throws CandidateExistsException;
-    Boolean upload(CandidateDTO candidateDTO) throws CandidateExistsException;
     Boolean update (CandidateDTO candidateDTO) throws CandidateNotExistsException;
     Candidate findByDocument(String document) throws CandidateNotExistsException, CandidateDocException;
     List<Candidate> findAll();

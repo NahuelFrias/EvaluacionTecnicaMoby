@@ -21,25 +21,21 @@ public class TechnologyServiceImpl implements TechnologyService {
     @Autowired
     TechnologyRepository technologyRepository;
 
-    @Override
-    @Transactional
-    public Boolean create(TechnologyDTO technologyDTO) throws TechnologyExistsException {
-        return upload(technologyDTO);
-    }
+    private static final String TECHNOLOGY_NOT_FOUND = "Technology not found.";
 
     @Override
     @Transactional
-    public Boolean upload(TechnologyDTO technologyDTO) throws TechnologyExistsException {
+    public Boolean create(TechnologyDTO technologyDTO) throws TechnologyExistsException {
         if (technologyRepository.findNameAndVersion(technologyDTO.getName(), technologyDTO.getVersion()) != null) {
-            throw new TechnologyExistsException("La tecnologia " + technologyDTO.getName()
-                    + ", version " + technologyDTO.getVersion() + " ya existe.");
+            throw new TechnologyExistsException("The technology " + technologyDTO.getName()
+                    + ", version " + technologyDTO.getVersion() + " already exists.");
         } else {
-            Technology technology = Technology.builder()
+            var technology = Technology.builder()
                     .name(technologyDTO.getName())
                     .version(technologyDTO.getVersion())
                     .build();
             technologyRepository.save(technology);
-            log.info("Tecnologia creada satisfactoriamente.");
+            log.info("Successfully created technology.");
         }
         return true;
     }
@@ -47,30 +43,30 @@ public class TechnologyServiceImpl implements TechnologyService {
     @Override
     @Transactional
     public Boolean update(TechnologyDTO technologyDTO) throws TechnologyNotExistsException {
-        Optional<Technology> resp = technologyRepository.findById(technologyDTO.getId());
+        Optional<Technology> technologyOptional = technologyRepository.findById(technologyDTO.getId());
 
-        if (resp.isPresent()) {
-            Technology technology= resp.get();
+        if (technologyOptional.isPresent()) {
+            Technology technology= technologyOptional.get();
             technology.setName(technologyDTO.getName());
             technology.setVersion(technologyDTO.getVersion());
 
             technologyRepository.save(technology);
-            log.info("Tecnologia actualizada.");
+            log.info("Updated technology.");
             return true;
         } else {
-            throw new TechnologyNotExistsException("No se encontro la tecnologia.");
+            throw new TechnologyNotExistsException(TECHNOLOGY_NOT_FOUND);
         }
     }
 
     @Override
     @Transactional(readOnly = true)
     public Technology findById(Long techId) throws TechnologyNotExistsException {
-        Optional<Technology> resp = technologyRepository.findById(techId);
+        Optional<Technology> technologyRepositoryById = technologyRepository.findById(techId);
 
-        if (resp.isPresent()) {
-            return resp.get();
+        if (technologyRepositoryById.isPresent()) {
+            return technologyRepositoryById.get();
         } else {
-            throw new TechnologyNotExistsException("No se encontro la tecnologia.");
+            throw new TechnologyNotExistsException(TECHNOLOGY_NOT_FOUND);
         }
     }
 
@@ -84,13 +80,12 @@ public class TechnologyServiceImpl implements TechnologyService {
     @Transactional
     public void delete(Long id) throws TechnologyNotExistsException {
 
-        Optional<Technology> resp = technologyRepository.findById(id);
-        if (resp.isPresent()) {
+        Optional<Technology> technologyRepositoryById = technologyRepository.findById(id);
+        if (technologyRepositoryById.isPresent()) {
             technologyRepository.deleteById(id);
-            log.info("Tecnologia eliminada.");
+            log.info("Technology deleted.");
         } else {
-            throw new TechnologyNotExistsException("No se encontro la tecnologia.");
+            throw new TechnologyNotExistsException(TECHNOLOGY_NOT_FOUND);
         }
-
     }
 }

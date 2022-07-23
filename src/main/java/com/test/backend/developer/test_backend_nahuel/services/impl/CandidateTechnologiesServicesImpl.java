@@ -26,24 +26,18 @@ public class CandidateTechnologiesServicesImpl implements CandidateTechnologiesS
     @Override
     @Transactional
     public Boolean create(CandidateTechnologiesDTO candidateTechnologiesDTO) throws CandidateTechnologiesExistsException {
-        return upload(candidateTechnologiesDTO);
-    }
-
-    @Override
-    @Transactional
-    public Boolean upload(CandidateTechnologiesDTO candidateTechnologiesDTO) throws CandidateTechnologiesExistsException {
         if (candidateTechnologiesRepository.findByCandidateIdAndTechnologyId(candidateTechnologiesDTO.getCandidate().getId(), candidateTechnologiesDTO.getTechnology().getId()) != null) {
-            throw new CandidateTechnologiesExistsException("La tecnologia relacionada a este candidato ya existe");
+            throw new CandidateTechnologiesExistsException("The technology related to this candidate already exists");
         } else {
-            Candidate candidate = Candidate.builder()
+            var candidate = Candidate.builder()
                     .id(candidateTechnologiesDTO.getCandidate().getId())
                     .name(candidateTechnologiesDTO.getCandidate().getName())
-                    .lastname(candidateTechnologiesDTO.getCandidate().getLastname())
+                    .lastName(candidateTechnologiesDTO.getCandidate().getLastName())
                     .documentType(candidateTechnologiesDTO.getCandidate().getDocumentType())
                     .numDocument(candidateTechnologiesDTO.getCandidate().getNumDocument())
-                    .birthdate(candidateTechnologiesDTO.getCandidate().getBirthdate())
+                    .birthDate(candidateTechnologiesDTO.getCandidate().getBirthDate())
                     .build();
-            Technology technology = Technology.builder()
+            var technology = Technology.builder()
                     .id(candidateTechnologiesDTO.getTechnology().getId())
                     .name(candidateTechnologiesDTO.getTechnology().getName())
                     .version(candidateTechnologiesDTO.getTechnology().getVersion())
@@ -55,7 +49,7 @@ public class CandidateTechnologiesServicesImpl implements CandidateTechnologiesS
                             .experience(candidateTechnologiesDTO.getExperience())
                             .build()
             );
-            log.info("Tecnologia asociada al candidato creada.");
+            log.info("Technology associated with the candidate created.");
         }
         return true;
     }
@@ -68,7 +62,7 @@ public class CandidateTechnologiesServicesImpl implements CandidateTechnologiesS
         if (candidateTechnologiesOptional.isPresent()) {
             candidateTechnologies = candidateTechnologiesOptional.get();
         } else {
-            throw new TechnologyNotExistsException("Esta tecnologia relacionada al candidato no existe.");
+            throw new TechnologyNotExistsException("This candidate-related technology does not exist.");
         }
         return candidateTechnologies;
     }
@@ -85,9 +79,9 @@ public class CandidateTechnologiesServicesImpl implements CandidateTechnologiesS
         Optional<CandidateTechnologies> candidateTechnologies = candidateTechnologiesRepository.findById(id);
         if (candidateTechnologies.isPresent()) {
             candidateTechnologiesRepository.deleteById(id);
-            log.info("Tecnologia asociada al candidato eliminada.");
+            log.info("Candidate's associated technology eliminated.");
         } else {
-            throw new TechnologyNotExistsException("Esta tecnologia relacionada al candidato no existe.");
+            throw new TechnologyNotExistsException("This candidate-related technology does not exist.");
         }
     }
 }
