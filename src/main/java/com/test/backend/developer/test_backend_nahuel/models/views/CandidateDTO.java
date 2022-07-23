@@ -16,9 +16,9 @@ import java.time.LocalDate;
 public class CandidateDTO {
     private Long id;
     private String name;
-    private String lastname;
+    private String lastName;
     private DocumentType documentType;
     private String numDocument;
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate birthdate;
+    private LocalDate birthDate;
 }
