@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import static com.test.backend.developer.test_backend_nahuel.utils.Querys.FIND_CANDIDATE_BY_DOCUMENT;
+import static com.test.backend.developer.test_backend_nahuel.utils.Queries.FIND_CANDIDATE_BY_DOCUMENT;
 
 @Repository
 public interface CandidateRepository extends JpaRepository<Candidate, Long> {

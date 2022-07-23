@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import static com.test.backend.developer.test_backend_nahuel.utils.Querys.FIND_BY_CANDIDATE_ID_AND_TECHNOLOGY_ID;
+import static com.test.backend.developer.test_backend_nahuel.utils.Queries.FIND_BY_CANDIDATE_ID_AND_TECHNOLOGY_ID;
 
 @Repository
 public interface CandidateTechnologiesRepository extends JpaRepository<CandidateTechnologies, Long> {

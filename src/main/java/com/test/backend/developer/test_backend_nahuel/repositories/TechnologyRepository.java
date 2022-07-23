@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import static com.test.backend.developer.test_backend_nahuel.utils.Querys.FIND_TECHNOLOGY_NAME_AND_VERSION;
+import static com.test.backend.developer.test_backend_nahuel.utils.Queries.FIND_TECHNOLOGY_NAME_AND_VERSION;
 
 @Repository
 public interface TechnologyRepository extends JpaRepository<Technology, Long> {
