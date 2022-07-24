@@ -6,6 +6,11 @@ import com.test.backend.developer.test_backend_nahuel.exceptions.CandidateNotExi
 import com.test.backend.developer.test_backend_nahuel.models.entities.Candidate;
 import com.test.backend.developer.test_backend_nahuel.models.views.CandidateDTO;
 import com.test.backend.developer.test_backend_nahuel.services.CandidateService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,12 +28,15 @@ import java.util.List;
 
 @Slf4j
 @RestController
+@Tag(name = "Candidate", description = "Create, update and deletion of candidates")
 @RequestMapping(value = "ev-tec/candidate")
 public class CandidateController {
 
     @Autowired
     private CandidateService candidateService;
 
+    @Operation(summary = "Create a new candidate", description = "candidate creation" ,responses = {
+    @ApiResponse(responseCode = "200", description = "Successful operation")})
     @PostMapping("/create")
     public ResponseEntity<HttpStatus> create (@RequestBody CandidateDTO candidateDTO) {
         try {
@@ -40,6 +48,9 @@ public class CandidateController {
         }
     }
 
+    @Operation(summary = "Candidate update",responses = {
+            @ApiResponse(responseCode = "200", description = "Successful operation"),
+            @ApiResponse(responseCode = "400", description = "Could not update correctly")})
     @PutMapping("/update")
     public ResponseEntity<Boolean> update (@RequestBody CandidateDTO candidateDTO){
         try {
@@ -50,6 +61,10 @@ public class CandidateController {
         }
     }
 
+    @Operation(summary = "Get a candidate by document", responses = {
+            @ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(schema = @Schema(implementation = Candidate.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid document"),
+            @ApiResponse(responseCode = "404", description = "Candidate not found")})
     @GetMapping("/findByDocument/{candidateDoc}")
     public ResponseEntity<Candidate> findByDocument (@PathVariable String document) {
         try {
@@ -60,11 +75,19 @@ public class CandidateController {
         }
     }
 
+    @Operation(summary = "Get all candidates", description = "Returns all candidates", responses = {
+            @ApiResponse(responseCode = "200", description = "Successful operation",
+                    content = @Content(schema = @Schema(implementation = Candidate.class)))})
     @GetMapping("/")
     public ResponseEntity<List<Candidate>> list(){
         return ResponseEntity.ok(candidateService.findAll());
     }
 
+    @Operation(summary = "Deletes a candidate by id", description = "Delete a candidate", responses = {
+            @ApiResponse(responseCode = "200", description = "Successful operation"),
+            @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
+            @ApiResponse(responseCode = "404", description = "Candidate not found") }
+    )
     @DeleteMapping("/delete/{candidateId}")
     public ResponseEntity<HttpStatus> deleteById (@PathVariable Long id){
         try {
