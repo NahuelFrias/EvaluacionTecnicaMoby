@@ -29,11 +29,11 @@ public class CandidateTechnologies implements Serializable {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "candidate_id", referencedColumnName = "candidate_id")
+    @JoinColumn(name = "candidate_id", referencedColumnName = "id")
     private Candidate candidate;
     @ManyToOne
 
-    @JoinColumn(name = "technology_id", referencedColumnName = "technology_id")
+    @JoinColumn(name = "technology_id", referencedColumnName = "id")
     private Technology technology;
 
     @Column(name = "experience")
