@@ -48,8 +48,8 @@ public class Candidate implements Serializable {
 
     @Column(name = "num_document")
     @NotNull
-    @Min(value = 7, message = "El documento no puede tener menos de 7 digitos")
-    @Max(value = 8, message = "El documento no puede tener mas de 8 digitos")
+    @Min(value = 7, message = "The document cannot be less than 7 digits long")
+    @Max(value = 8, message = "The document cannot have more than 8 digits")
     private String numDocument;
 
     @Column(name = "birthdate")
