@@ -7,6 +7,7 @@ import com.test.backend.developer.test_backend_nahuel.exceptions.TechnologyNotEx
 import com.test.backend.developer.test_backend_nahuel.models.entities.Candidate;
 import com.test.backend.developer.test_backend_nahuel.models.entities.CandidateTechnologies;
 import com.test.backend.developer.test_backend_nahuel.models.views.CandidateTechnologiesDTO;
+import com.test.backend.developer.test_backend_nahuel.projections.CandidateTechnologiesProjection;
 import com.test.backend.developer.test_backend_nahuel.services.CandidateTechnologiesService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -36,10 +37,10 @@ public class CandidateTechnologiesController {
     @Autowired
     CandidateTechnologiesService candidateTechnologiesService;
 
-    @Operation(summary = "Create a new technology by candidate",responses = {
+    @Operation(summary = "Create a new technology by candidate", responses = {
             @ApiResponse(responseCode = "200", description = "Successful operation")})
     @PostMapping("/create")
-    public ResponseEntity<HttpStatus> create (@RequestBody CandidateTechnologiesDTO candidateTechnologiesDTO) {
+    public ResponseEntity<HttpStatus> create(@RequestBody CandidateTechnologiesDTO candidateTechnologiesDTO) {
         try {
             candidateTechnologiesService.create(candidateTechnologiesDTO);
             return new ResponseEntity<>(HttpStatus.CREATED);
@@ -76,12 +77,25 @@ public class CandidateTechnologiesController {
             @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
             @ApiResponse(responseCode = "404", description = "Technology by candidate not found")})
     @DeleteMapping("/delete/{candidateTechnologiesId}")
-    public ResponseEntity<HttpStatus> deleteById (@PathVariable Long id) {
+    public ResponseEntity<HttpStatus> deleteById(@PathVariable Long id) {
         try {
             candidateTechnologiesService.delete(id);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (CandidateNotExistsException | TechnologyNotExistsException e) {
             log.error("Failed to delete correctly.");
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @Operation(summary = "Get a list of candidates", description = "Gets a list of candidates from the name of a technology",
+            responses = { @ApiResponse(responseCode = "200", description = "Successful operation",
+                    content = @Content(schema = @Schema(implementation = CandidateTechnologies.class)))})
+    @GetMapping("/listCandidateByTechnology/{technologyName}")
+    public ResponseEntity<List<CandidateTechnologiesProjection>> listCandidateByTechnology(@PathVariable String technology) {
+        try {
+            return new ResponseEntity<>(candidateTechnologiesService.listCandidateByTechnology(technology), HttpStatus.OK);
+        } catch (TechnologyNotExistsException e) {
+            log.error("Technology not found");
             throw new RuntimeException(e.getMessage());
         }
     }
