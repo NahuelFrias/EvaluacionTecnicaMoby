@@ -27,7 +27,7 @@ public class Technology implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "technology_name")
     @NotNull
     private String name;
 
