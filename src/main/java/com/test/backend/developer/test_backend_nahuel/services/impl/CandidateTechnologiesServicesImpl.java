@@ -6,6 +6,7 @@ import com.test.backend.developer.test_backend_nahuel.models.entities.Candidate;
 import com.test.backend.developer.test_backend_nahuel.models.entities.CandidateTechnologies;
 import com.test.backend.developer.test_backend_nahuel.models.entities.Technology;
 import com.test.backend.developer.test_backend_nahuel.models.views.CandidateTechnologiesDTO;
+import com.test.backend.developer.test_backend_nahuel.projections.CandidateTechnologiesProjection;
 import com.test.backend.developer.test_backend_nahuel.repositories.CandidateTechnologiesRepository;
 import com.test.backend.developer.test_backend_nahuel.services.CandidateTechnologiesService;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +23,8 @@ public class CandidateTechnologiesServicesImpl implements CandidateTechnologiesS
 
     @Autowired
     CandidateTechnologiesRepository candidateTechnologiesRepository;
+    @Autowired
+    TechnologyServiceImpl technologyService;
 
     @Override
     @Transactional
@@ -82,6 +85,14 @@ public class CandidateTechnologiesServicesImpl implements CandidateTechnologiesS
             log.info("Candidate's associated technology eliminated.");
         } else {
             throw new TechnologyNotExistsException("This candidate-related technology does not exist.");
+        }
+    }
+    @Override
+    public List<CandidateTechnologiesProjection> listCandidateByTechnology(String technology) throws TechnologyNotExistsException {
+        if(technologyService.findByname(technology)) {
+            return candidateTechnologiesRepository.listCandidateByTechnology(technology);
+        } else {
+            throw new TechnologyNotExistsException("Technology not found");
         }
     }
 }
