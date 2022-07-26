@@ -1,6 +1,7 @@
 package com.test.backend.developer.test_backend_nahuel.controllers;
 
 import com.test.backend.developer.test_backend_nahuel.services.TechnologyService;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ public class TechnologyControllerTests extends AbstractMVCTest {
     @Autowired
     MockMvc mockMvc;
 
+    @Disabled
     @Test
     void createTest() throws Exception {
         var technologyDto = getTechnologyDTO();
