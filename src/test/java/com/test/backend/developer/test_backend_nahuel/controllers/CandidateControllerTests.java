@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import com.google.gson.Gson;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.Optional;
 
@@ -27,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class CandidateControllerTest extends AbstractMVCTest {
+class CandidateControllerTests extends AbstractMVCTest {
 
     @Autowired
     MockMvc mockMvc;
@@ -46,7 +47,8 @@ class CandidateControllerTest extends AbstractMVCTest {
         String candidateDtoJson = new Gson().toJson(candidateDto);
         mockMvc.perform(post("/ev-tec/candidate/create")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(candidateDtoJson)).andExpect(status().isCreated());
+                .content(candidateDtoJson))
+                .andExpect(status().isCreated());
 
     }
 
@@ -73,8 +75,9 @@ class CandidateControllerTest extends AbstractMVCTest {
     @Test
     void findByDocument() throws Exception {
         var candidate = getCandidate();
+        String document = "12345678";
         when(candidateService.findByDocument(getCandidate().getNumDocument())).thenReturn(candidate);
-        mockMvc.perform(get("/ev-tec/candidate/findByDocument/12345678"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/ev-tec/candidate/findByDocument/{document}",document))
                 .andExpect(status().is5xxServerError());
     }
 

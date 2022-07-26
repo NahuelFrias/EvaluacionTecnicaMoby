@@ -10,7 +10,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static com.test.backend.developer.test_backend_nahuel.utils.TestEntityFactory.getCandidateTechnologies;
 import static com.test.backend.developer.test_backend_nahuel.utils.TestEntityFactory.getCandidateTechnologiesDTO;
-import static com.test.backend.developer.test_backend_nahuel.utils.TestEntityFactory.getCandidateTechnologiesList;
+import static com.test.backend.developer.test_backend_nahuel.utils.TestEntityFactory.getCandidateByTechnologyList;
 import static com.test.backend.developer.test_backend_nahuel.utils.TestEntityFactory.getTechnology;
 import static com.test.backend.developer.test_backend_nahuel.utils.TestEntityFactory.getTechnologyDTO;
 import static org.mockito.Mockito.when;
@@ -38,9 +38,11 @@ public class CandidateTechnologiesControllerTests extends AbstractMVCTest{
 
     @Test
     void finAllTest() throws Exception {
-        var candidateByTechnologies = getCandidateTechnologiesList();
+        var candidateByTechnologies = getCandidateByTechnologyList();
         when(candidateTechnologiesService.findAll()).thenReturn(candidateByTechnologies);
-        mockMvc.perform(get("/ev-tec/candidate-technologies/").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
+        mockMvc.perform(get("/ev-tec/candidate-technologies/")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
     }
 
     @Test

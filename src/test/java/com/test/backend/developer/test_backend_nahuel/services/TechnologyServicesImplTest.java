@@ -26,11 +26,20 @@ public class TechnologyServicesImplTest extends AbstractMvcTestServices {
     TechnologyRepository technologyRepository;
 
     @Test
-    void uploadTechnologyTest() {
+    void createTest() {
         var technologies = getTechnologyList();
         var technologyDTO = getTechnologyDTO();
         when(technologyRepository.findAll()).thenReturn(technologies);
         assertTrue(technologyService.create(technologyDTO));
+    }
+
+    @Test
+    void updateTest(){
+        var technologyDTO = getTechnologyDTO();
+        var technology = getTechnology();
+        when(technologyRepository.findById(1L)).thenReturn(Optional.ofNullable(technology));
+        technologyService.update(technologyDTO);
+        verify(technologyRepository).save(technology);
     }
 
     @Test

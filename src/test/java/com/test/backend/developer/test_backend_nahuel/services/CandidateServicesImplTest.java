@@ -2,7 +2,6 @@ package com.test.backend.developer.test_backend_nahuel.services;
 
 import com.test.backend.developer.test_backend_nahuel.repositories.CandidateRepository;
 import com.test.backend.developer.test_backend_nahuel.services.impl.CandidateServiceImpl;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -11,6 +10,7 @@ import java.util.Optional;
 
 import static com.test.backend.developer.test_backend_nahuel.utils.TestEntityFactory.getCandidate;
 import static com.test.backend.developer.test_backend_nahuel.utils.TestEntityFactory.getCandidateDTO;
+import static com.test.backend.developer.test_backend_nahuel.utils.TestEntityFactory.getCandidateDTODuplicated;
 import static com.test.backend.developer.test_backend_nahuel.utils.TestEntityFactory.getCandidateList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -33,12 +33,12 @@ public class CandidateServicesImplTest extends AbstractMvcTestServices {
         assertTrue(candidateService.create(candidateDTO));
     }
 
-    @Disabled
     @Test
     void updateTest(){
-        var candidateDTO = getCandidateDTO();
+        var candidateDTO = getCandidateDTODuplicated();
         var candidate = getCandidate();
         when(candidateRepository.findById(candidateDTO.getId())).thenReturn(Optional.of(getCandidate()));
+        candidateService.update(candidateDTO);
         verify(candidateRepository).save(candidate);
     }
 

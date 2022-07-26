@@ -34,6 +34,16 @@ public class TestEntityFactory {
                 .birthDate(null)
                 .build();
     }
+    public static CandidateDTO getCandidateDTODuplicated() {
+        return CandidateDTO.builder()
+                .id(1L)
+                .name("Lionel")
+                .lastName("Messi")
+                .documentType(DocumentType.DNI)
+                .numDocument("12345678")
+                .birthDate(null)
+                .build();
+    }
     public static List<Candidate> getCandidateList() {
         List<Candidate> candidates = new ArrayList<>();
         candidates.add(getCandidate());
@@ -83,12 +93,6 @@ public class TestEntityFactory {
                 .build();
     }
 
-    public static List<CandidateTechnologies> getCandidateByTechnologyList() {
-        List<CandidateTechnologies> candidateTechnologiesList = new ArrayList<>();
-        candidateTechnologiesList.add(getCandidateTechnologies());
-        return candidateTechnologiesList;
-    }
-
     public static CandidateTechnologies getCandidateByTechnology() {
         Candidate candidate = getCandidate();
         Technology technology = getTechnology();
@@ -110,7 +114,7 @@ public class TestEntityFactory {
                 .build();
     }
 
-    public static List<CandidateTechnologies> getCandidateTechnologiesList() {
+    public static List<CandidateTechnologies> getCandidateByTechnologyList() {
         List<CandidateTechnologies> candidateByTechnologies = new ArrayList<>();
         candidateByTechnologies.add(getCandidateByTechnology());
         return candidateByTechnologies;
