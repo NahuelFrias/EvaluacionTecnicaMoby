@@ -9,6 +9,7 @@ import com.test.backend.developer.test_backend_nahuel.models.entities.CandidateT
 import com.test.backend.developer.test_backend_nahuel.models.views.CandidateTechnologiesDTO;
 import com.test.backend.developer.test_backend_nahuel.projections.CandidateTechnologiesProjection;
 import com.test.backend.developer.test_backend_nahuel.services.CandidateTechnologiesService;
+import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -30,7 +31,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@Tag(name = "CandidateTechnologies", description = "Create, update and deletion of technologies by candidates")
+@Api(tags = "CandidateTechnologies", description = "Create, update and deletion of technologies by candidates")
 @RequestMapping(value = "ev-tec/candidate-technologies")
 public class CandidateTechnologiesController {
 

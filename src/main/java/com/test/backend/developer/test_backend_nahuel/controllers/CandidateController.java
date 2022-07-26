@@ -6,6 +6,7 @@ import com.test.backend.developer.test_backend_nahuel.exceptions.CandidateNotExi
 import com.test.backend.developer.test_backend_nahuel.models.entities.Candidate;
 import com.test.backend.developer.test_backend_nahuel.models.views.CandidateDTO;
 import com.test.backend.developer.test_backend_nahuel.services.CandidateService;
+import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -28,7 +29,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@Tag(name = "Candidate", description = "Create, update and deletion of candidates")
+@Api(tags = "Candidate", description = "Create, update and deletion of candidates")
 @RequestMapping(value = "ev-tec/candidate")
 public class CandidateController {
 
