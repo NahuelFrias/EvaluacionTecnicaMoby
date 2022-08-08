@@ -25,7 +25,7 @@ public class TechnologyServiceImpl implements TechnologyService {
 
     @Override
     @Transactional
-    public Boolean create(TechnologyDTO technologyDTO) throws TechnologyExistsException {
+    public void create(TechnologyDTO technologyDTO) throws TechnologyExistsException {
         if (technologyRepository.findNameAndVersion(technologyDTO.getName(), technologyDTO.getVersion()) != null) {
             throw new TechnologyExistsException("The technology " + technologyDTO.getName()
                     + ", version " + technologyDTO.getVersion() + " already exists.");
@@ -37,7 +37,6 @@ public class TechnologyServiceImpl implements TechnologyService {
             technologyRepository.save(technology);
             log.info("Successfully created technology.");
         }
-        return true;
     }
 
     @Override
@@ -46,7 +45,7 @@ public class TechnologyServiceImpl implements TechnologyService {
         Optional<Technology> technologyOptional = technologyRepository.findById(technologyDTO.getId());
 
         if (technologyOptional.isPresent()) {
-            Technology technology= technologyOptional.get();
+            Technology technology = technologyOptional.get();
             technology.setName(technologyDTO.getName());
             technology.setVersion(technologyDTO.getVersion());
 
@@ -72,7 +71,7 @@ public class TechnologyServiceImpl implements TechnologyService {
 
     @Override
     @Transactional
-    public Boolean findByname (String technology) throws TechnologyNotExistsException{
+    public Boolean findByname(String technology) throws TechnologyNotExistsException {
         Technology technologyRepositoryByName = technologyRepository.findByName(technology);
 
         if (technologyRepositoryByName != null) {
