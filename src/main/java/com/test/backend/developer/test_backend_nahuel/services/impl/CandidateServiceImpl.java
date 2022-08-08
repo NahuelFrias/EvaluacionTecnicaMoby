@@ -24,7 +24,7 @@ public class CandidateServiceImpl implements CandidateService {
 
     @Override
     @Transactional
-    public void create(CandidateDTO candidateDTO) throws CandidateExistsException {
+    public void create(CandidateDTO candidateDTO) {
         List<Candidate> listCandidate = candidateRepository.findAll();
         if (listCandidate.stream().anyMatch(
                 candidate -> candidate.getNumDocument().equals(candidateDTO.getNumDocument())
@@ -45,7 +45,7 @@ public class CandidateServiceImpl implements CandidateService {
 
     @Override
     @Transactional
-    public Boolean update(CandidateDTO candidateDTO) throws CandidateNotExistsException {
+    public Boolean update(CandidateDTO candidateDTO) {
         Optional<Candidate> candidateOptional = candidateRepository.findById(candidateDTO.getId());
 
         if (candidateOptional.isPresent()) {
@@ -66,7 +66,7 @@ public class CandidateServiceImpl implements CandidateService {
 
     @Override
     @Transactional(readOnly = true)
-    public Candidate findByDocument(String document) throws CandidateNotExistsException {
+    public Candidate findByDocument(String document) {
         Candidate candidate;
         if (candidateRepository.findByDocument(document) != null) {
             candidate = candidateRepository.findByDocument(document);
@@ -84,7 +84,7 @@ public class CandidateServiceImpl implements CandidateService {
 
     @Override
     @Transactional
-    public void delete(Long id) throws CandidateNotExistsException {
+    public void delete(Long id) {
         if (candidateRepository.findById(id).isPresent()) {
             candidateRepository.deleteById(id);
             log.info("Eliminated candidate.");

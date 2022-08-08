@@ -15,9 +15,13 @@ import java.util.List;
 @Service
 public interface CandidateTechnologiesService {
 
-    void create(CandidateTechnologiesDTO candidateTechnologiesDTO) throws CandidateExistsException, CandidateTechnologiesExistsException;
-    CandidateTechnologies findById (Long id) throws TechnologyNotExistsException;
-    List<CandidateTechnologies> findAll ();
-    void delete(Long id) throws CandidateNotExistsException, TechnologyNotExistsException;
-    List<CandidateTechnologiesProjection> listCandidateByTechnology (String technology);
+    void create(CandidateTechnologiesDTO candidateTechnologiesDTO);
+
+    CandidateTechnologies findById(Long id);
+
+    List<CandidateTechnologies> findAll();
+
+    void delete(Long id);
+
+    List<CandidateTechnologiesProjection> listCandidateByTechnology(String technology);
 }

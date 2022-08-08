@@ -12,11 +12,14 @@ import java.util.List;
 @Service
 public interface CandidateService {
 
-    void create(CandidateDTO candidateDTO) throws CandidateExistsException;
-    Boolean update (CandidateDTO candidateDTO) throws CandidateNotExistsException;
-    Candidate findByDocument(String document) throws CandidateNotExistsException, CandidateDocException;
-    List<Candidate> findAll();
-    void delete(Long id) throws CandidateNotExistsException;
+    void create(CandidateDTO candidateDTO);
 
+    Boolean update(CandidateDTO candidateDTO);
+
+    Candidate findByDocument(String document);
+
+    List<Candidate> findAll();
+
+    void delete(Long id);
 
 }

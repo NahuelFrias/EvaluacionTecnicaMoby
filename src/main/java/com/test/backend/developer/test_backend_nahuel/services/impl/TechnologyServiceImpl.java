@@ -25,7 +25,7 @@ public class TechnologyServiceImpl implements TechnologyService {
 
     @Override
     @Transactional
-    public void create(TechnologyDTO technologyDTO) throws TechnologyExistsException {
+    public void create(TechnologyDTO technologyDTO) {
         if (technologyRepository.findNameAndVersion(technologyDTO.getName(), technologyDTO.getVersion()) != null) {
             throw new TechnologyExistsException("The technology " + technologyDTO.getName()
                     + ", version " + technologyDTO.getVersion() + " already exists.");
@@ -41,7 +41,7 @@ public class TechnologyServiceImpl implements TechnologyService {
 
     @Override
     @Transactional
-    public Boolean update(TechnologyDTO technologyDTO) throws TechnologyNotExistsException {
+    public Boolean update(TechnologyDTO technologyDTO) {
         Optional<Technology> technologyOptional = technologyRepository.findById(technologyDTO.getId());
 
         if (technologyOptional.isPresent()) {
@@ -59,7 +59,7 @@ public class TechnologyServiceImpl implements TechnologyService {
 
     @Override
     @Transactional(readOnly = true)
-    public Technology findById(Long techId) throws TechnologyNotExistsException {
+    public Technology findById(Long techId) {
         Optional<Technology> technologyRepositoryById = technologyRepository.findById(techId);
 
         if (technologyRepositoryById.isPresent()) {
@@ -71,7 +71,7 @@ public class TechnologyServiceImpl implements TechnologyService {
 
     @Override
     @Transactional
-    public Boolean findByName(String technology) throws TechnologyNotExistsException {
+    public Boolean findByName(String technology) {
         Technology technologyRepositoryByName = technologyRepository.findByName(technology);
 
         if (technologyRepositoryByName != null) {
@@ -89,7 +89,7 @@ public class TechnologyServiceImpl implements TechnologyService {
 
     @Override
     @Transactional
-    public void delete(Long id) throws TechnologyNotExistsException {
+    public void delete(Long id) {
 
         Optional<Technology> technologyRepositoryById = technologyRepository.findById(id);
         if (technologyRepositoryById.isPresent()) {

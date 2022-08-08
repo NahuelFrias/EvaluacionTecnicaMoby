@@ -28,7 +28,7 @@ public class CandidateTechnologiesServicesImpl implements CandidateTechnologiesS
 
     @Override
     @Transactional
-    public void create(CandidateTechnologiesDTO candidateTechnologiesDTO) throws CandidateTechnologiesExistsException {
+    public void create(CandidateTechnologiesDTO candidateTechnologiesDTO) {
         if (candidateTechnologiesRepository.findByCandidateIdAndTechnologyId(candidateTechnologiesDTO.getCandidate().getId(), candidateTechnologiesDTO.getTechnology().getId()) != null) {
             throw new CandidateTechnologiesExistsException("The technology related to this candidate already exists");
         } else {
@@ -55,9 +55,10 @@ public class CandidateTechnologiesServicesImpl implements CandidateTechnologiesS
             log.info("Technology associated with the candidate created.");
         }
     }
+
     @Override
     @Transactional(readOnly = true)
-    public CandidateTechnologies findById(Long id) throws TechnologyNotExistsException {
+    public CandidateTechnologies findById(Long id) {
         CandidateTechnologies candidateTechnologies;
         Optional<CandidateTechnologies> candidateTechnologiesOptional = candidateTechnologiesRepository.findById(id);
         if (candidateTechnologiesOptional.isPresent()) {
@@ -76,7 +77,7 @@ public class CandidateTechnologiesServicesImpl implements CandidateTechnologiesS
 
     @Override
     @Transactional
-    public void delete(Long id) throws TechnologyNotExistsException {
+    public void delete(Long id) {
         Optional<CandidateTechnologies> candidateTechnologies = candidateTechnologiesRepository.findById(id);
         if (candidateTechnologies.isPresent()) {
             candidateTechnologiesRepository.deleteById(id);
@@ -87,7 +88,7 @@ public class CandidateTechnologiesServicesImpl implements CandidateTechnologiesS
     }
 
     @Override
-    public List<CandidateTechnologiesProjection> listCandidateByTechnology(String technology) throws TechnologyNotExistsException {
+    public List<CandidateTechnologiesProjection> listCandidateByTechnology(String technology) {
         if (technologyService.findByName(technology)) {
             return candidateTechnologiesRepository.listCandidateByTechnology(technology);
         } else {

@@ -10,11 +10,15 @@ import java.util.List;
 
 @Service
 public interface TechnologyService {
-    void create(TechnologyDTO technologyDTO) throws TechnologyExistsException;
-    Boolean update(TechnologyDTO technologyDTO) throws TechnologyNotExistsException;
-    Technology findById(Long techId) throws TechnologyNotExistsException;
+    void create(TechnologyDTO technologyDTO);
+
+    Boolean update(TechnologyDTO technologyDTO);
+
+    Technology findById(Long techId);
+
     List<Technology> findAll();
-    void delete(Long id) throws TechnologyNotExistsException;
+
+    void delete(Long id);
 
     Boolean findByName(String technology);
 
