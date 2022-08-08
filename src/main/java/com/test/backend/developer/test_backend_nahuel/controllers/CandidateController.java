@@ -35,24 +35,24 @@ public class CandidateController {
     @Autowired
     private CandidateService candidateService;
 
-    @Operation(summary = "Create a new candidate", description = "candidate creation" ,responses = {
-    @ApiResponse(responseCode = "200", description = "Successful operation")})
+    @Operation(summary = "Create a new candidate", description = "candidate creation", responses = {
+            @ApiResponse(responseCode = "200", description = "Successful operation")})
     @PostMapping("/create")
-    public ResponseEntity<HttpStatus> create (@RequestBody CandidateDTO candidateDTO) {
+    public ResponseEntity<HttpStatus> create(@RequestBody CandidateDTO candidateDTO) {
         try {
             candidateService.create(candidateDTO);
-            return new ResponseEntity<>( HttpStatus.CREATED);
+            return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (CandidateExistsException e) {
             log.error("The candidate could not be created.");
             throw new RuntimeException(e.getMessage());
         }
     }
 
-    @Operation(summary = "Candidate update",responses = {
+    @Operation(summary = "Candidate update", responses = {
             @ApiResponse(responseCode = "200", description = "Successful operation"),
             @ApiResponse(responseCode = "400", description = "Could not update correctly")})
     @PutMapping("/update")
-    public ResponseEntity<Boolean> update (@RequestBody CandidateDTO candidateDTO){
+    public ResponseEntity<Boolean> update(@RequestBody CandidateDTO candidateDTO) {
         try {
             return new ResponseEntity<>(candidateService.update(candidateDTO), HttpStatus.OK);
         } catch (CandidateNotExistsException e) {
@@ -66,7 +66,7 @@ public class CandidateController {
             @ApiResponse(responseCode = "400", description = "Invalid document"),
             @ApiResponse(responseCode = "404", description = "Candidate not found")})
     @GetMapping("/findByDocument/{candidateDoc}")
-    public ResponseEntity<Candidate> findByDocument (@PathVariable String candidateDoc) {
+    public ResponseEntity<Candidate> findByDocument(@PathVariable String candidateDoc) {
         try {
             return new ResponseEntity<>(candidateService.findByDocument(candidateDoc), HttpStatus.OK);
         } catch (CandidateNotExistsException | CandidateDocException e) {
@@ -79,17 +79,17 @@ public class CandidateController {
             @ApiResponse(responseCode = "200", description = "Successful operation",
                     content = @Content(schema = @Schema(implementation = Candidate.class)))})
     @GetMapping("/")
-    public ResponseEntity<List<Candidate>> list(){
+    public ResponseEntity<List<Candidate>> list() {
         return ResponseEntity.ok(candidateService.findAll());
     }
 
     @Operation(summary = "Deletes a candidate by id", description = "Delete a candidate", responses = {
             @ApiResponse(responseCode = "200", description = "Successful operation"),
             @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
-            @ApiResponse(responseCode = "404", description = "Candidate not found") }
+            @ApiResponse(responseCode = "404", description = "Candidate not found")}
     )
     @DeleteMapping("/delete/{candidateId}")
-    public ResponseEntity<HttpStatus> deleteById (@PathVariable Long candidateId){
+    public ResponseEntity<HttpStatus> deleteById(@PathVariable Long candidateId) {
         try {
             candidateService.delete(candidateId);
             return new ResponseEntity<>(HttpStatus.OK);
