@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import com.test.backend.developer.test_backend_nahuel.models.enums.DocumentType;
 import lombok.AllArgsConstructor;
@@ -34,26 +36,27 @@ public class Candidate implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "name")
-    @NotNull
+    @Column(name = "name", nullable = false)
+    @NotEmpty(message = "Name may not be empty")
     private String name;
 
-    @Column(name = "lastname")
-    @NotNull
+    @Column(name = "lastname", nullable = false)
+    @NotEmpty(message = "Lastname may not be empty")
     private String lastName;
 
     @Column(name = "document_type")
-    @NotNull
+    @NotEmpty
     private DocumentType documentType;
 
-    @Column(name = "num_document")
-    @NotNull
+    @Column(name = "num_document", nullable = false)
+    @NotBlank(message = "Document may not be empty")
     @Min(value = 7, message = "The document cannot be less than 7 digits long")
     @Max(value = 8, message = "The document cannot have more than 8 digits")
     private String numDocument;
 
     @Column(name = "birthdate")
     @JsonFormat(pattern = "yyyy-MM-dd")
+    @NotNull
     private LocalDate birthDate;
 
 }

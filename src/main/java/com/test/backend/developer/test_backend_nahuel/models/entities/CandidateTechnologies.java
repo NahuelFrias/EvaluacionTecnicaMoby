@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
@@ -30,10 +31,12 @@ public class CandidateTechnologies implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "candidate_id", referencedColumnName = "id")
+    @NotNull
     private Candidate candidate;
-    @ManyToOne
 
+    @ManyToOne
     @JoinColumn(name = "technology_id", referencedColumnName = "id")
+    @NotNull
     private Technology technology;
 
     @Column(name = "experience")
