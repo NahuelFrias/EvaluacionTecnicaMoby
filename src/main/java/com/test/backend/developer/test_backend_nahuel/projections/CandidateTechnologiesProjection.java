@@ -14,14 +14,12 @@ public interface CandidateTechnologiesProjection {
     String getDocument();
 
     @Value("#{target.birthdate}")
-    String getBirthdate();
+    String getBirthDate();
 
     @Value("#{target.technology_name}")
     String getTechnologyName();
 
-    @Value("#{target.version}")
     String getVersion();
 
-    @Value("#{target.experience}")
     String getExperience();
 }
