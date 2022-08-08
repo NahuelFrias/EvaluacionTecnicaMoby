@@ -15,32 +15,32 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(CandidateDocException.class)
-    public ResponseEntity<?> candidateDocHandler (Exception e){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    public ResponseEntity<String> candidateDocHandler() {
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
     @ExceptionHandler(CandidateExistsException.class)
-    public ResponseEntity<?> candidateExistsHandler (Exception e){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    public ResponseEntity<String> candidateExistsHandler() {
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
     @ExceptionHandler(CandidateNotExistsException.class)
-    public ResponseEntity<?> candidateNotExistsHandler (Exception e){
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    public ResponseEntity<String> candidateNotExistsHandler() {
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
     @ExceptionHandler(CandidateTechnologiesExistsException.class)
-    public ResponseEntity<?> candidateTechnologiesExistsHandler (Exception e){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    public ResponseEntity<String> candidateTechnologiesExistsHandler() {
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
     @ExceptionHandler(TechnologyExistsException.class)
-    public ResponseEntity<?> technologyExistsHandler (Exception e){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    public ResponseEntity<String> technologyExistsHandler() {
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
     @ExceptionHandler(TechnologyNotExistsException.class)
-    public ResponseEntity<?> technologyNotExistsHandler (Exception e){
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    public ResponseEntity<String> technologyNotExistsHandler() {
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 }
