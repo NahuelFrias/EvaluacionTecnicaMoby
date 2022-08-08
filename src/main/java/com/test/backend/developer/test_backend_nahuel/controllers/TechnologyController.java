@@ -2,7 +2,6 @@ package com.test.backend.developer.test_backend_nahuel.controllers;
 
 import com.test.backend.developer.test_backend_nahuel.exceptions.TechnologyExistsException;
 import com.test.backend.developer.test_backend_nahuel.exceptions.TechnologyNotExistsException;
-import com.test.backend.developer.test_backend_nahuel.models.entities.Candidate;
 import com.test.backend.developer.test_backend_nahuel.models.entities.Technology;
 import com.test.backend.developer.test_backend_nahuel.models.views.TechnologyDTO;
 import com.test.backend.developer.test_backend_nahuel.services.TechnologyService;
@@ -11,7 +10,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,7 +27,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@Api(tags = "Technology", description = "Create, update and deletion of technologies")
+@Api(tags = "Technology", value = "Create, update and deletion of technologies")
 @RequestMapping(value = "ev-tec/technology")
 public class TechnologyController {
 
@@ -67,9 +65,9 @@ public class TechnologyController {
             @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
             @ApiResponse(responseCode = "404", description = "Technology not found")})
     @GetMapping("/{technologyId}")
-    public ResponseEntity<Technology> findById (@PathVariable Long techId){
+    public ResponseEntity<Technology> findById (@PathVariable Long technologyId){
         try {
-            return ResponseEntity.ok(technologyService.findById(techId));
+            return ResponseEntity.ok(technologyService.findById(technologyId));
         } catch (TechnologyNotExistsException e) {
             log.error("Technology not found.");
             throw new RuntimeException(e.getMessage());
@@ -90,9 +88,9 @@ public class TechnologyController {
             @ApiResponse(responseCode = "404", description = "Technology not found") }
     )
     @DeleteMapping("/delete/{technologyId}")
-    public ResponseEntity<HttpStatus> deleteById(@PathVariable Long techId) {
+    public ResponseEntity<HttpStatus> deleteById(@PathVariable Long technologyId) {
         try {
-            technologyService.delete(techId);
+            technologyService.delete(technologyId);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (TechnologyNotExistsException e) {
             log.error("Failed to delete correctly.");

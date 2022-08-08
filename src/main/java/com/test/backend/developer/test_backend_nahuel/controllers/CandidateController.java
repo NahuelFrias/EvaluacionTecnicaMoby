@@ -11,7 +11,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,7 +28,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@Api(tags = "Candidate", description = "Create, update and deletion of candidates")
+@Api(tags = "Candidate", value = "Create, update and deletion of candidates")
 @RequestMapping(value = "ev-tec/candidate")
 public class CandidateController {
 
@@ -67,9 +66,9 @@ public class CandidateController {
             @ApiResponse(responseCode = "400", description = "Invalid document"),
             @ApiResponse(responseCode = "404", description = "Candidate not found")})
     @GetMapping("/findByDocument/{candidateDoc}")
-    public ResponseEntity<Candidate> findByDocument (@PathVariable String document) {
+    public ResponseEntity<Candidate> findByDocument (@PathVariable String candidateDoc) {
         try {
-            return new ResponseEntity<>(candidateService.findByDocument(document), HttpStatus.OK);
+            return new ResponseEntity<>(candidateService.findByDocument(candidateDoc), HttpStatus.OK);
         } catch (CandidateNotExistsException | CandidateDocException e) {
             log.error("Document not found.");
             throw new RuntimeException(e.getMessage());
@@ -90,9 +89,9 @@ public class CandidateController {
             @ApiResponse(responseCode = "404", description = "Candidate not found") }
     )
     @DeleteMapping("/delete/{candidateId}")
-    public ResponseEntity<HttpStatus> deleteById (@PathVariable Long id){
+    public ResponseEntity<HttpStatus> deleteById (@PathVariable Long candidateId){
         try {
-            candidateService.delete(id);
+            candidateService.delete(candidateId);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (CandidateNotExistsException e) {
             log.error("Failed to delete correctly.");
