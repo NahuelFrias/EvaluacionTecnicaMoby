@@ -43,9 +43,9 @@ public class CandidateTechnologyController {
         try {
             candidateTechnologiesService.create(candidateTechnologiesDTO);
             return new ResponseEntity<>(HttpStatus.CREATED);
-        } catch (CandidateExistsException | CandidateTechnologiesExistsException e) {
-            log.error("The candidate technology could not be created correctly.");
-            throw new RuntimeException(e.getMessage());
+        } catch (CandidateTechnologiesExistsException e) {
+            log.error("The candidate technology could not be created correctly.", e.getMessage());
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
     }
 
@@ -66,8 +66,8 @@ public class CandidateTechnologyController {
         try {
             return new ResponseEntity<>(candidateTechnologiesService.findById(candidateTechnologiesId), HttpStatus.OK);
         } catch (TechnologyNotExistsException e) {
-            log.error("Technology by candidate in the found.");
-            throw new RuntimeException(e.getMessage());
+            log.error("Technology by candidate in the found.", e.getMessage());
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
     }
 
@@ -81,8 +81,8 @@ public class CandidateTechnologyController {
             candidateTechnologiesService.delete(candidateTechnologiesId);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (CandidateNotExistsException | TechnologyNotExistsException e) {
-            log.error("Failed to delete correctly.");
-            throw new RuntimeException(e.getMessage());
+            log.error("Failed to delete correctly.", e.getMessage());
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
     }
 
@@ -94,8 +94,8 @@ public class CandidateTechnologyController {
         try {
             return new ResponseEntity<>(candidateTechnologiesService.listCandidateByTechnology(technologyName), HttpStatus.OK);
         } catch (TechnologyNotExistsException e) {
-            log.error("Technology not found");
-            throw new RuntimeException(e.getMessage());
+            log.error("Technology not found", e.getMessage());
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
     }
 }

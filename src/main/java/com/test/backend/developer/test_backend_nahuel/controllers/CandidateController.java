@@ -43,8 +43,8 @@ public class CandidateController {
             candidateService.create(candidateDTO);
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (CandidateExistsException e) {
-            log.error("The candidate could not be created.");
-            throw new RuntimeException(e.getMessage());
+            log.error("The candidate could not be created.", e.getMessage());
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
     }
 
@@ -56,8 +56,8 @@ public class CandidateController {
         try {
             return new ResponseEntity<>(candidateService.update(candidateDTO), HttpStatus.OK);
         } catch (CandidateNotExistsException e) {
-            log.error("Could not update correctly.");
-            throw new RuntimeException(e.getMessage());
+            log.error("Could not update correctly.", e.getMessage());
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
     }
 
@@ -69,9 +69,9 @@ public class CandidateController {
     public ResponseEntity<Candidate> findByDocument(@PathVariable String candidateDoc) {
         try {
             return new ResponseEntity<>(candidateService.findByDocument(candidateDoc), HttpStatus.OK);
-        } catch (CandidateNotExistsException | CandidateDocException e) {
-            log.error("Document not found.");
-            throw new RuntimeException(e.getMessage());
+        } catch (CandidateNotExistsException e) {
+            log.error("Document not found.", e.getMessage());
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
     }
 
@@ -94,8 +94,8 @@ public class CandidateController {
             candidateService.delete(candidateId);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (CandidateNotExistsException e) {
-            log.error("Failed to delete correctly.");
-            throw new RuntimeException(e.getMessage());
+            log.error("Failed to delete correctly.", e.getMessage());
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
     }
 }

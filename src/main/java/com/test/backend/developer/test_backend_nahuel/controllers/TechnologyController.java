@@ -42,8 +42,8 @@ public class TechnologyController {
             technologyService.create(technologyDTO);
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (TechnologyExistsException e) {
-            log.error("Technology could not be created correctly.");
-            throw new RuntimeException(e.getMessage());
+            log.error("Technology could not be created correctly.", e.getMessage());
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
     }
 
@@ -55,8 +55,8 @@ public class TechnologyController {
         try {
             return new ResponseEntity<>(technologyService.update(technologyDTO), HttpStatus.OK);
         } catch (TechnologyNotExistsException e) {
-            log.error("Could not update correctly.");
-            throw new RuntimeException(e.getMessage());
+            log.error("Could not update correctly.", e.getMessage());
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
     }
 
@@ -69,8 +69,8 @@ public class TechnologyController {
         try {
             return ResponseEntity.ok(technologyService.findById(technologyId));
         } catch (TechnologyNotExistsException e) {
-            log.error("Technology not found.");
-            throw new RuntimeException(e.getMessage());
+            log.error("Technology not found.", e.getMessage());
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
     }
 
@@ -93,8 +93,8 @@ public class TechnologyController {
             technologyService.delete(technologyId);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (TechnologyNotExistsException e) {
-            log.error("Failed to delete correctly.");
-            throw new RuntimeException(e.getMessage());
+            log.error("Failed to delete correctly.", e.getMessage());
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
     }
 }
