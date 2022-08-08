@@ -24,11 +24,12 @@ public class CandidateServiceImpl implements CandidateService {
 
     @Override
     @Transactional
-    public Boolean create(CandidateDTO candidateDTO) throws CandidateExistsException {
+    public void create(CandidateDTO candidateDTO) throws CandidateExistsException {
         List<Candidate> listCandidate = candidateRepository.findAll();
-        if(listCandidate.stream().anyMatch(
+        if (listCandidate.stream().anyMatch(
                 candidate -> candidate.getNumDocument().equals(candidateDTO.getNumDocument())
-        )){ throw new CandidateExistsException("The candidate with document " + candidateDTO.getNumDocument() + " already exists!");
+        )) {
+            throw new CandidateExistsException("The candidate with document " + candidateDTO.getNumDocument() + " already exists!");
         } else {
             Candidate candidate = Candidate.builder()
                     .name(candidateDTO.getName())
@@ -40,7 +41,6 @@ public class CandidateServiceImpl implements CandidateService {
             candidateRepository.save(candidate);
             log.info("Candidate successfully created.");
         }
-        return true;
     }
 
     @Override

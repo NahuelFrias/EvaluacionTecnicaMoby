@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public interface CandidateService {
 
-    Boolean create(CandidateDTO candidateDTO) throws CandidateExistsException;
+    void create(CandidateDTO candidateDTO) throws CandidateExistsException;
     Boolean update (CandidateDTO candidateDTO) throws CandidateNotExistsException;
     Candidate findByDocument(String document) throws CandidateNotExistsException, CandidateDocException;
     List<Candidate> findAll();
