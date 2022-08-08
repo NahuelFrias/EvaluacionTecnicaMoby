@@ -71,7 +71,7 @@ public class TechnologyServiceImpl implements TechnologyService {
 
     @Override
     @Transactional
-    public Boolean findByname(String technology) throws TechnologyNotExistsException {
+    public Boolean findByName(String technology) throws TechnologyNotExistsException {
         Technology technologyRepositoryByName = technologyRepository.findByName(technology);
 
         if (technologyRepositoryByName != null) {

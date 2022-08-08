@@ -88,7 +88,7 @@ public class CandidateTechnologiesServicesImpl implements CandidateTechnologiesS
 
     @Override
     public List<CandidateTechnologiesProjection> listCandidateByTechnology(String technology) throws TechnologyNotExistsException {
-        if (technologyService.findByname(technology)) {
+        if (technologyService.findByName(technology)) {
             return candidateTechnologiesRepository.listCandidateByTechnology(technology);
         } else {
             throw new TechnologyNotExistsException("Technology not found");

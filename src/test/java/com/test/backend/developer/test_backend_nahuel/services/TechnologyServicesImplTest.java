@@ -54,7 +54,7 @@ public class TechnologyServicesImplTest extends AbstractMvcTestServices {
         String techName = "Java";
         var technology = getTechnology();
         when(technologyRepository.findByName(techName)).thenReturn(technology);
-        assertTrue(technologyService.findByname(getTechnology().getName()));
+        assertTrue(technologyService.findByName(getTechnology().getName()));
     }
 
     @Test

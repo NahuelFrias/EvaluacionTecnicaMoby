@@ -16,6 +16,6 @@ public interface TechnologyService {
     List<Technology> findAll();
     void delete(Long id) throws TechnologyNotExistsException;
 
-    Boolean findByname (String technology);
+    Boolean findByName(String technology);
 
 }
