@@ -42,7 +42,7 @@ public class CandidateController {
             candidateService.create(candidateDTO);
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (CandidateExistsException e) {
-            log.error("The candidate could not be created.", e.getMessage());
+            log.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
     }
@@ -55,7 +55,7 @@ public class CandidateController {
         try {
             return new ResponseEntity<>(candidateService.update(candidateDTO), HttpStatus.OK);
         } catch (CandidateNotExistsException e) {
-            log.error("Could not update correctly.", e.getMessage());
+            log.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
     }
@@ -69,7 +69,7 @@ public class CandidateController {
         try {
             return new ResponseEntity<>(candidateService.findByDocument(candidateDoc), HttpStatus.OK);
         } catch (CandidateNotExistsException e) {
-            log.error("Document not found.", e.getMessage());
+            log.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
     }
@@ -93,7 +93,7 @@ public class CandidateController {
             candidateService.delete(candidateId);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (CandidateNotExistsException e) {
-            log.error("Failed to delete correctly.", e.getMessage());
+            log.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
     }
