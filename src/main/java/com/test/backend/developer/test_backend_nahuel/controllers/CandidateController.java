@@ -1,6 +1,5 @@
 package com.test.backend.developer.test_backend_nahuel.controllers;
 
-import com.test.backend.developer.test_backend_nahuel.exceptions.CandidateDocException;
 import com.test.backend.developer.test_backend_nahuel.exceptions.CandidateExistsException;
 import com.test.backend.developer.test_backend_nahuel.exceptions.CandidateNotExistsException;
 import com.test.backend.developer.test_backend_nahuel.models.entities.Candidate;

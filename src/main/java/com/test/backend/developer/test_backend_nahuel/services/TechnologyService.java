@@ -1,7 +1,5 @@
 package com.test.backend.developer.test_backend_nahuel.services;
 
-import com.test.backend.developer.test_backend_nahuel.exceptions.TechnologyExistsException;
-import com.test.backend.developer.test_backend_nahuel.exceptions.TechnologyNotExistsException;
 import com.test.backend.developer.test_backend_nahuel.models.entities.Technology;
 import com.test.backend.developer.test_backend_nahuel.models.views.TechnologyDTO;
 import org.springframework.stereotype.Service;
