@@ -34,10 +34,10 @@ public class TechnologyController {
     @Autowired
     TechnologyService technologyService;
 
-    @Operation(summary = "Create a new technology", description = "technology creation" ,responses = {
+    @Operation(summary = "Create a new technology", description = "technology creation", responses = {
             @ApiResponse(responseCode = "200", description = "Successful operation")})
     @PostMapping(value = "/create")
-    public ResponseEntity<HttpStatus> create (@RequestBody TechnologyDTO technologyDTO){
+    public ResponseEntity<HttpStatus> create(@RequestBody TechnologyDTO technologyDTO) {
         try {
             technologyService.create(technologyDTO);
             return new ResponseEntity<>(HttpStatus.CREATED);
@@ -47,11 +47,11 @@ public class TechnologyController {
         }
     }
 
-    @Operation(summary = "Technology update",responses = {
+    @Operation(summary = "Technology update", responses = {
             @ApiResponse(responseCode = "200", description = "Successful operation"),
             @ApiResponse(responseCode = "400", description = "Could not update correctly")})
     @PutMapping("/update")
-    public ResponseEntity<Boolean> update (@RequestBody TechnologyDTO technologyDTO){
+    public ResponseEntity<Boolean> update(@RequestBody TechnologyDTO technologyDTO) {
         try {
             return new ResponseEntity<>(technologyService.update(technologyDTO), HttpStatus.OK);
         } catch (TechnologyNotExistsException e) {
@@ -65,7 +65,7 @@ public class TechnologyController {
             @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
             @ApiResponse(responseCode = "404", description = "Technology not found")})
     @GetMapping("/{technologyId}")
-    public ResponseEntity<Technology> findById (@PathVariable Long technologyId){
+    public ResponseEntity<Technology> findById(@PathVariable Long technologyId) {
         try {
             return ResponseEntity.ok(technologyService.findById(technologyId));
         } catch (TechnologyNotExistsException e) {
@@ -75,7 +75,7 @@ public class TechnologyController {
     }
 
     @Operation(summary = "Get all technologies", description = "Returns all technologies", responses = {
-    @ApiResponse(responseCode = "200", description = "Successful operation",
+            @ApiResponse(responseCode = "200", description = "Successful operation",
                     content = @Content(schema = @Schema(implementation = Technology.class)))})
     @GetMapping("/")
     public ResponseEntity<List<Technology>> list() {
@@ -85,7 +85,7 @@ public class TechnologyController {
     @Operation(summary = "Deletes a technology by id", description = "Delete a technology", responses = {
             @ApiResponse(responseCode = "200", description = "Successful operation"),
             @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
-            @ApiResponse(responseCode = "404", description = "Technology not found") }
+            @ApiResponse(responseCode = "404", description = "Technology not found")}
     )
     @DeleteMapping("/delete/{technologyId}")
     public ResponseEntity<HttpStatus> deleteById(@PathVariable Long technologyId) {

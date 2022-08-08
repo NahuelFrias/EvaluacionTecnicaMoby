@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
-public class CandidateTechnologiesControllerTests extends AbstractMVCTest{
+public class CandidateTechnologyControllerTests extends AbstractMVCTest{
 
     @Mock
     CandidateTechnologiesServicesImpl candidateTechnologiesService;

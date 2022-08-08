@@ -31,7 +31,7 @@ import java.util.List;
 @RestController
 @Api(tags = "CandidateTechnologies", value = "Create, update and deletion of technologies by candidates")
 @RequestMapping(value = "ev-tec/candidate-technologies")
-public class CandidateTechnologiesController {
+public class CandidateTechnologyController {
 
     @Autowired
     CandidateTechnologiesService candidateTechnologiesService;
@@ -87,7 +87,7 @@ public class CandidateTechnologiesController {
     }
 
     @Operation(summary = "Get a list of candidates", description = "Gets a list of candidates from the name of a technology",
-            responses = { @ApiResponse(responseCode = "200", description = "Successful operation",
+            responses = {@ApiResponse(responseCode = "200", description = "Successful operation",
                     content = @Content(schema = @Schema(implementation = CandidateTechnologies.class)))})
     @GetMapping("/listCandidateByTechnology/{technologyName}")
     public ResponseEntity<List<CandidateTechnologiesProjection>> listCandidateByTechnology(@PathVariable String technologyName) {
