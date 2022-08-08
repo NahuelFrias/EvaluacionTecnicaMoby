@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 public interface CandidateTechnologiesService {
 
-    Boolean create(CandidateTechnologiesDTO candidateTechnologiesDTO) throws CandidateExistsException, CandidateTechnologiesExistsException;
+    void create(CandidateTechnologiesDTO candidateTechnologiesDTO) throws CandidateExistsException, CandidateTechnologiesExistsException;
     CandidateTechnologies findById (Long id) throws TechnologyNotExistsException;
     List<CandidateTechnologies> findAll ();
     void delete(Long id) throws CandidateNotExistsException, TechnologyNotExistsException;

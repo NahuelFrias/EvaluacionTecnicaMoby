@@ -28,7 +28,7 @@ public class CandidateTechnologiesServicesImpl implements CandidateTechnologiesS
 
     @Override
     @Transactional
-    public Boolean create(CandidateTechnologiesDTO candidateTechnologiesDTO) throws CandidateTechnologiesExistsException {
+    public void create(CandidateTechnologiesDTO candidateTechnologiesDTO) throws CandidateTechnologiesExistsException {
         if (candidateTechnologiesRepository.findByCandidateIdAndTechnologyId(candidateTechnologiesDTO.getCandidate().getId(), candidateTechnologiesDTO.getTechnology().getId()) != null) {
             throw new CandidateTechnologiesExistsException("The technology related to this candidate already exists");
         } else {
@@ -54,9 +54,7 @@ public class CandidateTechnologiesServicesImpl implements CandidateTechnologiesS
             );
             log.info("Technology associated with the candidate created.");
         }
-        return true;
     }
-
     @Override
     @Transactional(readOnly = true)
     public CandidateTechnologies findById(Long id) throws TechnologyNotExistsException {
@@ -87,9 +85,10 @@ public class CandidateTechnologiesServicesImpl implements CandidateTechnologiesS
             throw new TechnologyNotExistsException("This candidate-related technology does not exist.");
         }
     }
+
     @Override
     public List<CandidateTechnologiesProjection> listCandidateByTechnology(String technology) throws TechnologyNotExistsException {
-        if(technologyService.findByname(technology)) {
+        if (technologyService.findByname(technology)) {
             return candidateTechnologiesRepository.listCandidateByTechnology(technology);
         } else {
             throw new TechnologyNotExistsException("Technology not found");
