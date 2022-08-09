@@ -1,6 +1,5 @@
 package com.test.backend.developer.test_backend_nahuel.exceptions.handler;
 
-import com.test.backend.developer.test_backend_nahuel.exceptions.CandidateDocException;
 import com.test.backend.developer.test_backend_nahuel.exceptions.CandidateExistsException;
 import com.test.backend.developer.test_backend_nahuel.exceptions.CandidateNotExistsException;
 import com.test.backend.developer.test_backend_nahuel.exceptions.CandidateTechnologiesExistsException;
@@ -13,11 +12,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-
-    @ExceptionHandler(CandidateDocException.class)
-    public ResponseEntity<String> candidateDocHandler() {
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
-    }
 
     @ExceptionHandler(CandidateExistsException.class)
     public ResponseEntity<String> candidateExistsHandler() {
