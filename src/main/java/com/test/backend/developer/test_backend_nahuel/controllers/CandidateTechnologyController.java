@@ -79,7 +79,7 @@ public class CandidateTechnologyController {
         try {
             candidateTechnologiesService.delete(candidateTechnologiesId);
             return new ResponseEntity<>(HttpStatus.OK);
-        } catch (CandidateNotExistsException | TechnologyNotExistsException e) {
+        } catch (TechnologyNotExistsException e) {
             log.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
