@@ -25,10 +25,10 @@ public class CandidateServiceImpl implements CandidateService {
     @Override
     @Transactional
     public void create(CandidateDTO candidateDTO) {
+        log.info("candidateDto: " + candidateDTO);
         List<Candidate> listCandidate = candidateRepository.findAll();
         if (listCandidate.stream().anyMatch(
-                candidate -> candidate.getNumDocument().equals(candidateDTO.getNumDocument())
-        )) {
+                candidate -> candidate.getNumDocument().equals(candidateDTO.getNumDocument()))) {
             throw new CandidateExistsException("The candidate with document " + candidateDTO.getNumDocument() + " already exists!");
         } else {
             Candidate candidate = Candidate.builder()
@@ -49,13 +49,14 @@ public class CandidateServiceImpl implements CandidateService {
         Optional<Candidate> candidateOptional = candidateRepository.findById(candidateDTO.getId());
 
         if (candidateOptional.isPresent()) {
+            log.debug("The candidateOptional is: " + candidateOptional.get());
             Candidate candidate = candidateOptional.get();
             candidate.setName(candidateDTO.getName());
             candidate.setLastName(candidateDTO.getLastName());
             candidate.setDocumentType(candidateDTO.getDocumentType());
             candidate.setNumDocument(candidateDTO.getNumDocument());
             candidate.setBirthDate(candidateDTO.getBirthDate());
-
+            log.debug("The candidate is: " + candidate);
             candidateRepository.save(candidate);
             log.info("Updated candidate.");
             return true;
@@ -67,9 +68,11 @@ public class CandidateServiceImpl implements CandidateService {
     @Override
     @Transactional(readOnly = true)
     public Candidate findByDocument(String document) {
+        log.info("document: " + document);
         Candidate candidate;
         if (candidateRepository.findByDocument(document) != null) {
             candidate = candidateRepository.findByDocument(document);
+            log.debug("candidate: " + candidate);
         } else {
             throw new CandidateNotExistsException("The candidate with document " + document + " does not exist!");
         }
@@ -85,6 +88,7 @@ public class CandidateServiceImpl implements CandidateService {
     @Override
     @Transactional
     public void delete(Long id) {
+        log.info("id: " + id);
         if (candidateRepository.findById(id).isPresent()) {
             candidateRepository.deleteById(id);
             log.info("Eliminated candidate.");

@@ -26,6 +26,7 @@ public class TechnologyServiceImpl implements TechnologyService {
     @Override
     @Transactional
     public void create(TechnologyDTO technologyDTO) {
+        log.info("technologyDTO: " + technologyDTO);
         if (technologyRepository.findNameAndVersion(technologyDTO.getName(), technologyDTO.getVersion()) != null) {
             throw new TechnologyExistsException("The technology " + technologyDTO.getName()
                     + ", version " + technologyDTO.getVersion() + " already exists.");
@@ -45,10 +46,11 @@ public class TechnologyServiceImpl implements TechnologyService {
         Optional<Technology> technologyOptional = technologyRepository.findById(technologyDTO.getId());
 
         if (technologyOptional.isPresent()) {
+            log.debug("technologyOptional: " + technologyOptional);
             Technology technology = technologyOptional.get();
             technology.setName(technologyDTO.getName());
             technology.setVersion(technologyDTO.getVersion());
-
+            log.info("technology: " + technology);
             technologyRepository.save(technology);
             log.info("Updated technology.");
             return true;
@@ -60,8 +62,9 @@ public class TechnologyServiceImpl implements TechnologyService {
     @Override
     @Transactional(readOnly = true)
     public Technology findById(Long techId) {
+        log.info("techId: " + techId);
         Optional<Technology> technologyRepositoryById = technologyRepository.findById(techId);
-
+        log.debug("technologyRepositoryById: " + technologyRepositoryById);
         if (technologyRepositoryById.isPresent()) {
             return technologyRepositoryById.get();
         } else {
@@ -72,8 +75,9 @@ public class TechnologyServiceImpl implements TechnologyService {
     @Override
     @Transactional
     public Boolean findByName(String technology) {
+        log.info("technology: " + technology);
         Technology technologyRepositoryByName = technologyRepository.findByName(technology);
-
+        log.debug("technologyRepositoryByName: " + technologyRepositoryByName);
         if (technologyRepositoryByName != null) {
             return true;
         } else {
@@ -90,9 +94,10 @@ public class TechnologyServiceImpl implements TechnologyService {
     @Override
     @Transactional
     public void delete(Long id) {
-
+        log.info("id: " + id);
         Optional<Technology> technologyRepositoryById = technologyRepository.findById(id);
         if (technologyRepositoryById.isPresent()) {
+            log.debug("technologyRepository: " + technologyRepositoryById);
             technologyRepository.deleteById(id);
             log.info("Technology deleted.");
         } else {

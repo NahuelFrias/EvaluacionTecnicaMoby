@@ -40,11 +40,13 @@ public class CandidateTechnologiesServicesImpl implements CandidateTechnologiesS
                     .numDocument(candidateTechnologiesDTO.getCandidate().getNumDocument())
                     .birthDate(candidateTechnologiesDTO.getCandidate().getBirthDate())
                     .build();
+            log.info("candidate: " + candidate);
             var technology = Technology.builder()
                     .id(candidateTechnologiesDTO.getTechnology().getId())
                     .name(candidateTechnologiesDTO.getTechnology().getName())
                     .version(candidateTechnologiesDTO.getTechnology().getVersion())
                     .build();
+            log.info("technology: " + technology);
             candidateTechnologiesRepository.save(
                     CandidateTechnologies.builder()
                             .candidate(candidate)
@@ -59,9 +61,11 @@ public class CandidateTechnologiesServicesImpl implements CandidateTechnologiesS
     @Override
     @Transactional(readOnly = true)
     public CandidateTechnologies findById(Long id) {
+        log.info("id: " + id);
         CandidateTechnologies candidateTechnologies;
         Optional<CandidateTechnologies> candidateTechnologiesOptional = candidateTechnologiesRepository.findById(id);
         if (candidateTechnologiesOptional.isPresent()) {
+            log.debug("candidateTechnologiesOptional: " + candidateTechnologiesOptional);
             candidateTechnologies = candidateTechnologiesOptional.get();
         } else {
             throw new TechnologyNotExistsException("This candidate-related technology does not exist.");
@@ -78,8 +82,10 @@ public class CandidateTechnologiesServicesImpl implements CandidateTechnologiesS
     @Override
     @Transactional
     public void delete(Long id) {
+        log.info("id: " + id);
         Optional<CandidateTechnologies> candidateTechnologies = candidateTechnologiesRepository.findById(id);
         if (candidateTechnologies.isPresent()) {
+            log.debug("candidateTechnologies: " + candidateTechnologies);
             candidateTechnologiesRepository.deleteById(id);
             log.info("Candidate's associated technology eliminated.");
         } else {
@@ -90,6 +96,7 @@ public class CandidateTechnologiesServicesImpl implements CandidateTechnologiesS
     @Override
     public List<CandidateTechnologiesProjection> listCandidateByTechnology(String technology) {
         if (technologyService.findByName(technology)) {
+            log.debug("technology: " + technologyService.findByName(technology));
             return candidateTechnologiesRepository.listCandidateByTechnology(technology);
         } else {
             throw new TechnologyNotExistsException("Technology not found");
