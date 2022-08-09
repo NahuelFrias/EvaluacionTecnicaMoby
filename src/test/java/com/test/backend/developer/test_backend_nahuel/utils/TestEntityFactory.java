@@ -34,16 +34,17 @@ public class TestEntityFactory {
                 .birthDate(null)
                 .build();
     }
-    public static CandidateDTO getCandidateDTODuplicated() {
+
+    public static CandidateDTO getCandidateDTOWithoutDni() {
         return CandidateDTO.builder()
                 .id(1L)
                 .name("Lionel")
                 .lastName("Messi")
                 .documentType(DocumentType.DNI)
-                .numDocument("12345678")
                 .birthDate(null)
                 .build();
     }
+
     public static List<Candidate> getCandidateList() {
         List<Candidate> candidates = new ArrayList<>();
         candidates.add(getCandidate());

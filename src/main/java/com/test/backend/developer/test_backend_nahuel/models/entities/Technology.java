@@ -24,14 +24,12 @@ public class Technology implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
 
     @Column(name = "technology_name")
     @NotEmpty
     private String name;
 
-    @Column(name = "version")
     @NotEmpty
     private String version;
 }
