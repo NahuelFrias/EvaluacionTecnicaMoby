@@ -63,12 +63,13 @@ class CandidateControllerTests extends AbstractMVCTest {
         @Test
         void createCandidateAlreadyExistTest() throws Exception {
             doThrow(CandidateExistsException.class).when(candidateService).create(getCandidateDTO());
-            String candidateDto = new Gson().toJson(getCandidateDTO());
+            var candidateDto = getCandidateDTO();
+            String candidateDtoJson = new Gson().toJson(getCandidateDTO());
             mockMvc.perform(post("/ev-tec/candidate/create")
                             .contentType(MediaType.APPLICATION_JSON)
-                            .content(candidateDto))
+                            .content(candidateDtoJson))
                     .andExpect(status().isAccepted())
-                    .andExpect(result -> assertThrows(CandidateExistsException.class, () -> candidateService.create(getCandidateDTO())));
+                    .andExpect(result -> assertThrows(CandidateExistsException.class, () -> candidateService.create(candidateDto)));
             verify(candidateService, atLeastOnce()).create(any(CandidateDTO.class));
         }
     }

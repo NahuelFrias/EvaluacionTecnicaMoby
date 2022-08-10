@@ -53,8 +53,8 @@ class CandidateServicesImplTest extends AbstractMvcTestServices {
 
         @Test
         void updateWhenCandidateNotExists() {
-            assertThrows(CandidateNotExistsException.class, () -> candidateService.update(getCandidateDTO()));
-
+            var candidateDto = getCandidateDTO();
+            assertThrows(CandidateNotExistsException.class, () -> candidateService.update(candidateDto));
         }
     }
 
@@ -67,7 +67,8 @@ class CandidateServicesImplTest extends AbstractMvcTestServices {
 
     @Test
     void documentNotExists() {
-        assertThrows(CandidateNotExistsException.class, () -> candidateService.findByDocument(getCandidateDTO().getNumDocument()));
+        var document = getCandidateDTO().getNumDocument();
+        assertThrows(CandidateNotExistsException.class, () -> candidateService.findByDocument(document));
     }
 
     @Test
@@ -91,7 +92,8 @@ class CandidateServicesImplTest extends AbstractMvcTestServices {
 
         @Test
         void deleteWhenCandidateNotExists() {
-            assertThrows(CandidateNotExistsException.class, () -> candidateService.delete(getCandidateDTO().getId()));
+            var candidateId = getCandidateDTO().getId();
+            assertThrows(CandidateNotExistsException.class, () -> candidateService.delete(candidateId));
 
         }
     }

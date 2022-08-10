@@ -52,8 +52,8 @@ class TechnologyServicesImplTest extends AbstractMvcTestServices {
 
         @Test
         void updateWhenTechnologyNotExists() {
-            assertThrows(TechnologyNotExistsException.class, () -> technologyService.update(getTechnologyDTO()));
-
+            var technologyDto = getTechnologyDTO();
+            assertThrows(TechnologyNotExistsException.class, () -> technologyService.update(technologyDto));
         }
     }
 
@@ -68,7 +68,8 @@ class TechnologyServicesImplTest extends AbstractMvcTestServices {
 
         @Test
         void technologyByIdNotExists() {
-            assertThrows(TechnologyNotExistsException.class, () -> technologyService.findById(getTechnologyDTO().getId()));
+            var technologyId = getTechnologyDTO().getId();
+            assertThrows(TechnologyNotExistsException.class, () -> technologyService.findById(technologyId));
         }
     }
 
@@ -84,7 +85,8 @@ class TechnologyServicesImplTest extends AbstractMvcTestServices {
 
         @Test
         void technologyByNameNotExistsTest() {
-            assertThrows(TechnologyNotExistsException.class, () -> technologyService.findByName(getTechnologyDTO().getName()));
+            var technologyName = getTechnologyDTO().getName();
+            assertThrows(TechnologyNotExistsException.class, () -> technologyService.findByName(technologyName));
         }
     }
 
@@ -109,7 +111,8 @@ class TechnologyServicesImplTest extends AbstractMvcTestServices {
 
         @Test
         void deleteWhenCTechnologyNotExistsTest() {
-            assertThrows(TechnologyNotExistsException.class, () -> technologyService.delete(getTechnologyDTO().getId()));
+            var technologyId = getTechnologyDTO().getId();
+            assertThrows(TechnologyNotExistsException.class, () -> technologyService.delete(technologyId));
         }
     }
 }

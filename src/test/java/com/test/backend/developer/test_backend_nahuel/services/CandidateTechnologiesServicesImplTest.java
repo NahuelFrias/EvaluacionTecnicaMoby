@@ -56,9 +56,10 @@ class CandidateTechnologiesServicesImplTest extends AbstractMvcTestServices {
     @Disabled("Se desabilita por falta de tiempo")
     @Test
     void createWhenCandidateTechnologyAlreadyExists() {
+        var candidateTechnologyDto = getCandidateTechnologiesDTO();
         candidateTechnologiesRepository.save(getCandidateTechnologies());
         candidateTechnologiesServices.create(getCandidateTechnologiesDTO());
-        assertThrows(TechnologyExistsException.class, () -> candidateTechnologiesServices.create(getCandidateTechnologiesDTO()));
+        assertThrows(TechnologyExistsException.class, () -> candidateTechnologiesServices.create(candidateTechnologyDto));
     }
     @Test
     void findAllTest() {
@@ -78,7 +79,8 @@ class CandidateTechnologiesServicesImplTest extends AbstractMvcTestServices {
     }
     @Test
     void candidateTechnologyByIdNotExists() {
-        assertThrows(TechnologyNotExistsException.class, () -> candidateTechnologiesServices.findById(getCandidateTechnologies().getId()));
+        var candidateTechnologyId = getCandidateTechnologies().getId();
+        assertThrows(TechnologyNotExistsException.class, () -> candidateTechnologiesServices.findById(candidateTechnologyId));
     }
     @Test
     void deleteById() {
@@ -89,7 +91,7 @@ class CandidateTechnologiesServicesImplTest extends AbstractMvcTestServices {
     }
     @Test
     void deleteWhenCandidateTechnologyNotExists() {
-        assertThrows(TechnologyNotExistsException.class, () -> candidateTechnologiesServices.delete(getCandidateTechnologiesDTO().getId()));
-
+        var candidateTechnologyId = getCandidateTechnologiesDTO().getId();
+        assertThrows(TechnologyNotExistsException.class, () -> candidateTechnologiesServices.delete(candidateTechnologyId));
     }
 }
