@@ -95,7 +95,7 @@ public class CandidateTechnologiesServicesImpl implements CandidateTechnologiesS
 
     @Override
     public List<CandidateTechnologiesProjection> listCandidateByTechnology(String technology) {
-        if (technologyService.findByName(technology)) {
+        if (Boolean.TRUE.equals(technologyService.findByName(technology))) {
             log.debug("technology: " + technologyService.findByName(technology));
             return candidateTechnologiesRepository.listCandidateByTechnology(technology);
         } else {

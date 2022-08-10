@@ -9,6 +9,7 @@ import com.test.backend.developer.test_backend_nahuel.repositories.TechnologyRep
 import com.test.backend.developer.test_backend_nahuel.services.impl.CandidateTechnologiesServicesImpl;
 import com.test.backend.developer.test_backend_nahuel.services.impl.TechnologyServiceImpl;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -43,22 +44,26 @@ class CandidateTechnologiesServicesImplTest extends AbstractMvcTestServices {
     @Mock
     TechnologyRepository technologyRepository;
 
-    @Test
-    void createTest() {
-        var candidateTechnologyDto = getCandidateTechnologiesDTO();
-        var candidateTechnology = getCandidateTechnologies();
+    @Nested
+    class CreateTest {
+        @Test
+        void createTest() {
+            var candidateTechnologyDto = getCandidateTechnologiesDTO();
+            var candidateTechnology = getCandidateTechnologies();
 
-        when(candidateTechnologiesRepository.save(candidateTechnology)).thenReturn(candidateTechnology);
-        candidateTechnologiesServices.create(candidateTechnologyDto);
-        candidateTechnologiesRepository.save(candidateTechnology);
-        verify(candidateTechnologiesRepository,times(1)).save(candidateTechnology);
-    }
-    @Disabled("Se desabilita por falta de tiempo")
-    @Test
-    void createWhenCandidateTechnologyAlreadyExists() {
-        candidateTechnologiesRepository.save(getCandidateTechnologies());
-        candidateTechnologiesServices.create(getCandidateTechnologiesDTO());
-        assertThrows(TechnologyExistsException.class, () -> candidateTechnologiesServices.create(getCandidateTechnologiesDTO()));
+            when(candidateTechnologiesRepository.save(candidateTechnology)).thenReturn(candidateTechnology);
+            candidateTechnologiesServices.create(candidateTechnologyDto);
+            candidateTechnologiesRepository.save(candidateTechnology);
+            verify(candidateTechnologiesRepository, times(1)).save(candidateTechnology);
+        }
+
+        @Disabled("Se desabilita por falta de tiempo")
+        @Test
+        void createWhenCandidateTechnologyAlreadyExists() {
+            candidateTechnologiesRepository.save(getCandidateTechnologies());
+            candidateTechnologiesServices.create(getCandidateTechnologiesDTO());
+            assertThrows(TechnologyExistsException.class, () -> candidateTechnologiesServices.create(getCandidateTechnologiesDTO()));
+        }
     }
     @Test
     void findAllTest() {
@@ -68,28 +73,39 @@ class CandidateTechnologiesServicesImplTest extends AbstractMvcTestServices {
         verify(candidateTechnologiesRepository, times(1)).findAll();
         assertEquals(candidateTechnologiesRepository.findAll(), candidateTechnologiesServicesAll);
     }
-    @Test
-    void findByIdTest() {
-        Long id = 1L;
-        var candidateTechnologies = getCandidateTechnologies();
-        when(candidateTechnologiesRepository.findById(id)).thenReturn(Optional.of(candidateTechnologies));
-        candidateTechnologiesServices.findById(id);
-        assertEquals(id, candidateTechnologies.getId());
-    }
-    @Test
-    void candidateTechnologyByIdNotExists() {
-        assertThrows(TechnologyNotExistsException.class, () -> candidateTechnologiesServices.findById(getCandidateTechnologies().getId()));
-    }
-    @Test
-    void deleteById() {
-        Long id = 1L;
-        when(candidateTechnologiesRepository.findById(id)).thenReturn(Optional.of(getCandidateTechnologies()));
-        candidateTechnologiesServices.delete(1L);
-        verify(candidateTechnologiesRepository, times(1)).deleteById(1L);
-    }
-    @Test
-    void deleteWhenCandidateTechnologyNotExists() {
-        assertThrows(TechnologyNotExistsException.class, () -> candidateTechnologiesServices.delete(getCandidateTechnologiesDTO().getId()));
 
+    @Nested
+    class FindByIdTest {
+        @Test
+        void findByIdTestOk() {
+            Long id = 1L;
+            var candidateTechnologies = getCandidateTechnologies();
+            when(candidateTechnologiesRepository.findById(id)).thenReturn(Optional.of(candidateTechnologies));
+            candidateTechnologiesServices.findById(id);
+            assertEquals(id, candidateTechnologies.getId());
+        }
+
+        @Test
+        void candidateTechnologyByIdNotExists() {
+            assertThrows(TechnologyNotExistsException.class, () -> candidateTechnologiesServices.findById(getCandidateTechnologies().getId()));
+        }
     }
+
+    @Nested
+    class DeleteTest {
+        @Test
+        void deleteById() {
+            Long id = 1L;
+            when(candidateTechnologiesRepository.findById(id)).thenReturn(Optional.of(getCandidateTechnologies()));
+            candidateTechnologiesServices.delete(1L);
+            verify(candidateTechnologiesRepository, times(1)).deleteById(1L);
+        }
+
+        @Test
+        void deleteWhenCandidateTechnologyNotExists() {
+            assertThrows(TechnologyNotExistsException.class, () -> candidateTechnologiesServices.delete(getCandidateTechnologiesDTO().getId()));
+
+        }
+    }
+
 }
