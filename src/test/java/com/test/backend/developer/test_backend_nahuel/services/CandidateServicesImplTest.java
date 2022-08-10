@@ -39,13 +39,6 @@ class CandidateServicesImplTest extends AbstractMvcTestServices {
         verify(candidateRepository, times(1)).save(candidate);
     }
 
-    @Test
-    void createWhenCandidateAlreadyExists() {
-        candidateRepository.save(getCandidate());
-        candidateService.create(getCandidateDTO());
-        assertThrows(CandidateExistsException.class, () -> candidateService.create(getCandidateDTO()));
-    }
-
     @Nested
     class UpdateTest {
         @Test
