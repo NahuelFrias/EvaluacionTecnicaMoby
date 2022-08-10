@@ -1,5 +1,9 @@
 package com.test.backend.developer.test_backend_nahuel.services;
 
+import com.test.backend.developer.test_backend_nahuel.exceptions.CandidateExistsException;
+import com.test.backend.developer.test_backend_nahuel.exceptions.CandidateNotExistsException;
+import com.test.backend.developer.test_backend_nahuel.exceptions.TechnologyExistsException;
+import com.test.backend.developer.test_backend_nahuel.exceptions.TechnologyNotExistsException;
 import com.test.backend.developer.test_backend_nahuel.repositories.CandidateTechnologiesRepository;
 import com.test.backend.developer.test_backend_nahuel.repositories.TechnologyRepository;
 import com.test.backend.developer.test_backend_nahuel.services.impl.CandidateTechnologiesServicesImpl;
@@ -11,17 +15,21 @@ import org.mockito.Mock;
 
 import java.util.Optional;
 
+import static com.test.backend.developer.test_backend_nahuel.utils.TestEntityFactory.getCandidate;
 import static com.test.backend.developer.test_backend_nahuel.utils.TestEntityFactory.getCandidateByTechnologyList;
+import static com.test.backend.developer.test_backend_nahuel.utils.TestEntityFactory.getCandidateDTO;
 import static com.test.backend.developer.test_backend_nahuel.utils.TestEntityFactory.getCandidateTechnologies;
 import static com.test.backend.developer.test_backend_nahuel.utils.TestEntityFactory.getCandidateTechnologiesDTO;
 import static com.test.backend.developer.test_backend_nahuel.utils.TestEntityFactory.getTechnology;
+import static com.test.backend.developer.test_backend_nahuel.utils.TestEntityFactory.getTechnologyDTO;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class CandidateTechnologiesServicesImplTest extends AbstractMvcTestServices {
+class CandidateTechnologiesServicesImplTest extends AbstractMvcTestServices {
 
     @InjectMocks
     CandidateTechnologiesServicesImpl candidateTechnologiesServices;
@@ -35,16 +43,22 @@ public class CandidateTechnologiesServicesImplTest extends AbstractMvcTestServic
     @Mock
     TechnologyRepository technologyRepository;
 
-    /*@Disabled
     @Test
     void createTest() {
-        var candidateTechnologiesList = getCandidateByTechnologyList();
-        var candidateByTechnologiesDTO = getCandidateTechnologiesDTO();
-        when(candidateTechnologiesRepository.findAll()).thenReturn(candidateTechnologiesList);
-        assertTrue(candidateTechnologiesServices.create(candidateByTechnologiesDTO));
-    }
+        var candidateTechnologyDto = getCandidateTechnologiesDTO();
+        var candidateTechnology = getCandidateTechnologies();
 
-    @Disabled
+        when(candidateTechnologiesRepository.save(candidateTechnology)).thenReturn(candidateTechnology);
+        candidateTechnologiesServices.create(candidateTechnologyDto);
+        candidateTechnologiesRepository.save(candidateTechnology);
+        verify(candidateTechnologiesRepository,times(1)).save(candidateTechnology);
+    }
+    @Test
+    void createWhenCandidateTechnologyAlreadyExists() {
+        candidateTechnologiesRepository.save(getCandidateTechnologies());
+        candidateTechnologiesServices.create(getCandidateTechnologiesDTO());
+        assertThrows(TechnologyExistsException.class, () -> candidateTechnologiesServices.create(getCandidateTechnologiesDTO()));
+    }
     @Test
     void findAllTest() {
         var candidateTechnologiesList = getCandidateByTechnologyList();
@@ -53,8 +67,6 @@ public class CandidateTechnologiesServicesImplTest extends AbstractMvcTestServic
         verify(candidateTechnologiesRepository, times(1)).findAll();
         assertEquals(candidateTechnologiesRepository.findAll(), candidateTechnologiesServicesAll);
     }
-
-    @Disabled
     @Test
     void findByIdTest() {
         Long id = 1L;
@@ -63,8 +75,10 @@ public class CandidateTechnologiesServicesImplTest extends AbstractMvcTestServic
         candidateTechnologiesServices.findById(id);
         assertEquals(id, candidateTechnologies.getId());
     }
-
-    @Disabled
+    @Test
+    void candidateTechnologyByIdNotExists() {
+        assertThrows(TechnologyNotExistsException.class, () -> candidateTechnologiesServices.findById(getCandidateTechnologies().getId()));
+    }
     @Test
     void deleteById() {
         Long id = 1L;
@@ -72,7 +86,13 @@ public class CandidateTechnologiesServicesImplTest extends AbstractMvcTestServic
         candidateTechnologiesServices.delete(1L);
         verify(candidateTechnologiesRepository, times(1)).deleteById(1L);
     }
+    @Test
+    void deleteWhenCandidateTechnologyNotExists() {
+        assertThrows(TechnologyNotExistsException.class, () -> candidateTechnologiesServices.delete(getCandidateTechnologiesDTO().getId()));
 
+    }
+
+    /*
     @Disabled
     @Test
     void listCandidateByTechnologyTest (){
