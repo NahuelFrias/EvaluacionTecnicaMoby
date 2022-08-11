@@ -46,7 +46,6 @@ public class CandidateTechnologyControllerImpl implements CandidateTechnologyCon
     public ResponseEntity<List<CandidateTechnologies>> findAll() {
         return ResponseEntity.ok(candidateTechnologiesService.findAll());
     }
-
     @Override
     @GetMapping("/findById/{candidateTechnologiesId}")
     public ResponseEntity<CandidateTechnologies> findById(@PathVariable Long candidateTechnologiesId) {
