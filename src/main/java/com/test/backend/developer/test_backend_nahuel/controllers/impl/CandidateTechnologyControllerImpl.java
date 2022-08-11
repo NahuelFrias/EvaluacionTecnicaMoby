@@ -24,8 +24,6 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping(value = "ev-tec/candidate-technologies")
-
-
 public class CandidateTechnologyControllerImpl implements CandidateTechnologyController {
 
     @Autowired

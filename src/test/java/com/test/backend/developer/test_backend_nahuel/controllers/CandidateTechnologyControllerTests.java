@@ -97,17 +97,15 @@ class CandidateTechnologyControllerTests extends AbstractMVCTest {
 
         @Test
         void findByIdWhenNotExistsTest() throws Exception {
-            doThrow(TechnologyNotExistsException.class).when(candidateTechnologiesService).findById(getCandidateTechnologiesDTO().getId());
-            var candidateTechnologies = getCandidateTechnologies();
-            var candidateTechnologiesId = getCandidateTechnologiesDTO().getId();
-            String idJson = new Gson().toJson(getCandidateTechnologies().getId());
-            when(candidateTechnologiesService.findById(getCandidateTechnologies().getId())).thenReturn(candidateTechnologies);
+            var candidateTechnologiesId = 2L;
+            doThrow(TechnologyNotExistsException.class).when(candidateTechnologiesService).findById(candidateTechnologiesId);
+            String idJson = new Gson().toJson(candidateTechnologiesId);
             mockMvc.perform(get("/ev-tec/candidate-technologies/findById/{candidateTechnologiesId}", idJson)
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(idJson))
-                    .andExpect(status().isOk())
+                    .andExpect(status().isAccepted())
                     .andExpect(result -> assertThrows(TechnologyNotExistsException.class, () -> candidateTechnologiesService.findById(candidateTechnologiesId)));
-            verify(candidateTechnologiesService, times(1)).findById(candidateTechnologies.getId());
+            verify(candidateTechnologiesService, atLeastOnce()).findById(2L);
         }
     }
 

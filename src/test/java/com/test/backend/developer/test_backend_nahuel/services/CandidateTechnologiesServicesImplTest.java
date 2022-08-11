@@ -53,7 +53,7 @@ class CandidateTechnologiesServicesImplTest extends AbstractMvcTestServices {
         candidateTechnologiesRepository.save(candidateTechnology);
         verify(candidateTechnologiesRepository,times(1)).save(candidateTechnology);
     }
-    @Disabled("Se desabilita por no encontrar el error")
+    @Disabled("Se deshabilita por no encontrar el error")
     @Test
     void createWhenCandidateTechnologyAlreadyExists() {
         var candidateTechnologyDto = getCandidateTechnologiesDTO();

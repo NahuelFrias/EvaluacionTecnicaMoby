@@ -84,6 +84,7 @@ public class TestEntityFactory {
                 .build();
     }
 
+
     public static CandidateTechnologiesDTO getCandidateTechnologiesDTO() {
         Candidate candidate = getCandidate();
         Technology technology = getTechnology();
@@ -93,6 +94,7 @@ public class TestEntityFactory {
                 .experience(2)
                 .build();
     }
+
 
     public static CandidateTechnologies getCandidateByTechnology() {
         Candidate candidate = getCandidate();
