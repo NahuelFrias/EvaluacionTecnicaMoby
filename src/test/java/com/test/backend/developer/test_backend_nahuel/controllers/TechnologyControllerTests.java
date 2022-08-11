@@ -88,14 +88,12 @@ class TechnologyControllerTests extends AbstractMVCTest {
             verify(technologyService, times(1)).findById(technology.getId());
         }
 
-        @Disabled("Se desabilita por no poder encontrar el error en la exception")
         @Test
         void findByIdTechnologyNotFoundTest() throws Exception {
             Long technologyId = getTechnology().getId();
             var technology = getTechnology();
             doThrow(TechnologyNotExistsException.class).when(technologyService).findById(technologyId);
             String technologyIdJson = new Gson().toJson(technologyId);
-            when(technologyService.findById(technologyId)).thenReturn(technology);
             mockMvc.perform(get("/ev-tec/technology/{technologyId}", technologyId)
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(technologyIdJson))
