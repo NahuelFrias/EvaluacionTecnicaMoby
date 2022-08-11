@@ -5,7 +5,6 @@ import com.test.backend.developer.test_backend_nahuel.exceptions.TechnologyNotEx
 import com.test.backend.developer.test_backend_nahuel.models.views.TechnologyDTO;
 import com.test.backend.developer.test_backend_nahuel.repositories.TechnologyRepository;
 import com.test.backend.developer.test_backend_nahuel.services.impl.TechnologyServiceImpl;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

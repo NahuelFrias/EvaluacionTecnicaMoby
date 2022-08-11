@@ -1,7 +1,5 @@
 package com.test.backend.developer.test_backend_nahuel.services;
 
-import com.test.backend.developer.test_backend_nahuel.exceptions.CandidateExistsException;
-import com.test.backend.developer.test_backend_nahuel.exceptions.CandidateNotExistsException;
 import com.test.backend.developer.test_backend_nahuel.exceptions.TechnologyExistsException;
 import com.test.backend.developer.test_backend_nahuel.exceptions.TechnologyNotExistsException;
 import com.test.backend.developer.test_backend_nahuel.projections.CandidateTechnologiesProjection;
