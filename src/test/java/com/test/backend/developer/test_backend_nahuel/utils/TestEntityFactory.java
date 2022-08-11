@@ -7,6 +7,7 @@ import com.test.backend.developer.test_backend_nahuel.models.enums.DocumentType;
 import com.test.backend.developer.test_backend_nahuel.models.views.CandidateDTO;
 import com.test.backend.developer.test_backend_nahuel.models.views.CandidateTechnologiesDTO;
 import com.test.backend.developer.test_backend_nahuel.models.views.TechnologyDTO;
+import com.test.backend.developer.test_backend_nahuel.projections.CandidateTechnologiesProjection;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -122,4 +123,5 @@ public class TestEntityFactory {
         candidateByTechnologies.add(getCandidateByTechnology());
         return candidateByTechnologies;
     }
+
 }
