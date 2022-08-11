@@ -1,5 +1,6 @@
 package com.test.backend.developer.test_backend_nahuel.controllers.impl;
 
+import com.test.backend.developer.test_backend_nahuel.controllers.CandidateTechnologyController;
 import com.test.backend.developer.test_backend_nahuel.exceptions.CandidateTechnologiesExistsException;
 import com.test.backend.developer.test_backend_nahuel.exceptions.TechnologyNotExistsException;
 import com.test.backend.developer.test_backend_nahuel.models.entities.CandidateTechnologies;
@@ -23,7 +24,9 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping(value = "ev-tec/candidate-technologies")
-public class CandidateTechnologyControllerImpl implements com.test.backend.developer.test_backend_nahuel.controllers.CandidateTechnologyController {
+
+
+public class CandidateTechnologyControllerImpl implements CandidateTechnologyController {
 
     @Autowired
     CandidateTechnologiesService candidateTechnologiesService;
@@ -47,7 +50,7 @@ public class CandidateTechnologyControllerImpl implements com.test.backend.devel
     }
 
     @Override
-    @GetMapping("/findById/{candidateTecnologiesId}")
+    @GetMapping("/findById/{candidateTechnologiesId}")
     public ResponseEntity<CandidateTechnologies> findById(@PathVariable Long candidateTechnologiesId) {
         try {
             return new ResponseEntity<>(candidateTechnologiesService.findById(candidateTechnologiesId), HttpStatus.OK);

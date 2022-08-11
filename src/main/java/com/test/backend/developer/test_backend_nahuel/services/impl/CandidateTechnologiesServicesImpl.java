@@ -33,7 +33,7 @@ public class CandidateTechnologiesServicesImpl implements CandidateTechnologiesS
             throw new CandidateTechnologiesExistsException("The technology related to this candidate already exists");
         } else {
             var candidate = Candidate.builder()
-                    .id(candidateTechnologiesDTO.getCandidate().getId())
+                    //.id(candidateTechnologiesDTO.getCandidate().getId())
                     .name(candidateTechnologiesDTO.getCandidate().getName())
                     .lastName(candidateTechnologiesDTO.getCandidate().getLastName())
                     .documentType(candidateTechnologiesDTO.getCandidate().getDocumentType())
@@ -42,7 +42,7 @@ public class CandidateTechnologiesServicesImpl implements CandidateTechnologiesS
                     .build();
             log.info("candidate: " + candidate);
             var technology = Technology.builder()
-                    .id(candidateTechnologiesDTO.getTechnology().getId())
+                    //.id(candidateTechnologiesDTO.getTechnology().getId())
                     .name(candidateTechnologiesDTO.getTechnology().getName())
                     .version(candidateTechnologiesDTO.getTechnology().getVersion())
                     .build();
