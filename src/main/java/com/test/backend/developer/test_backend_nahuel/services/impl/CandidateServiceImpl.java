@@ -31,7 +31,7 @@ public class CandidateServiceImpl implements CandidateService {
                 candidate -> candidate.getNumDocument().equals(candidateDTO.getNumDocument()))) {
             throw new CandidateExistsException("The candidate with document " + candidateDTO.getNumDocument() + " already exists!");
         } else {
-            Candidate candidate = Candidate.builder()
+            var candidate = Candidate.builder()
                     .name(candidateDTO.getName())
                     .lastName(candidateDTO.getLastName())
                     .documentType(candidateDTO.getDocumentType())
@@ -50,7 +50,7 @@ public class CandidateServiceImpl implements CandidateService {
 
         if (candidateOptional.isPresent()) {
             log.debug("The candidateOptional is: " + candidateOptional.get());
-            Candidate candidate = candidateOptional.get();
+            var candidate = candidateOptional.get();
             candidate.setName(candidateDTO.getName());
             candidate.setLastName(candidateDTO.getLastName());
             candidate.setDocumentType(candidateDTO.getDocumentType());

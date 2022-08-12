@@ -36,7 +36,7 @@ public class CandidateTechnologyControllerImpl implements CandidateTechnologyCon
             candidateTechnologiesService.create(candidateTechnologiesDTO);
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (CandidateTechnologiesExistsException e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(),e);
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
     }
@@ -52,7 +52,7 @@ public class CandidateTechnologyControllerImpl implements CandidateTechnologyCon
         try {
             return new ResponseEntity<>(candidateTechnologiesService.findById(candidateTechnologiesId), HttpStatus.OK);
         } catch (TechnologyNotExistsException e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(),e);
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
     }
@@ -64,7 +64,7 @@ public class CandidateTechnologyControllerImpl implements CandidateTechnologyCon
             candidateTechnologiesService.delete(candidateTechnologiesId);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (TechnologyNotExistsException e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(),e);
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
     }
@@ -75,7 +75,7 @@ public class CandidateTechnologyControllerImpl implements CandidateTechnologyCon
         try {
             return new ResponseEntity<>(candidateTechnologiesService.listCandidateByTechnology(technologyName), HttpStatus.OK);
         } catch (TechnologyNotExistsException e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(),e);
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
     }

@@ -34,7 +34,7 @@ public class TechnologyControllerImpl implements TechnologyController {
             technologyService.create(technologyDTO);
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (TechnologyExistsException e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(),e);
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
     }
@@ -45,7 +45,7 @@ public class TechnologyControllerImpl implements TechnologyController {
         try {
             return new ResponseEntity<>(technologyService.update(technologyDTO), HttpStatus.OK);
         } catch (TechnologyNotExistsException e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(),e);
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
     }
@@ -56,7 +56,7 @@ public class TechnologyControllerImpl implements TechnologyController {
         try {
             return ResponseEntity.ok(technologyService.findById(technologyId));
         } catch (TechnologyNotExistsException e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(),e);
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
     }
@@ -74,7 +74,7 @@ public class TechnologyControllerImpl implements TechnologyController {
             technologyService.delete(technologyId);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (TechnologyNotExistsException e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(),e);
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
     }

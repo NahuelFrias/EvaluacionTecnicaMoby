@@ -47,7 +47,7 @@ public class TechnologyServiceImpl implements TechnologyService {
 
         if (technologyOptional.isPresent()) {
             log.debug("technologyOptional: " + technologyOptional);
-            Technology technology = technologyOptional.get();
+            var technology = technologyOptional.get();
             technology.setName(technologyDTO.getName());
             technology.setVersion(technologyDTO.getVersion());
             log.info("technology: " + technology);
@@ -76,7 +76,7 @@ public class TechnologyServiceImpl implements TechnologyService {
     @Transactional
     public Boolean findByName(String technology) {
         log.info("technology: " + technology);
-        Technology technologyRepositoryByName = technologyRepository.findByName(technology);
+        var technologyRepositoryByName = technologyRepository.findByName(technology);
         log.debug("technologyRepositoryByName: " + technologyRepositoryByName);
         if (technologyRepositoryByName != null) {
             return true;

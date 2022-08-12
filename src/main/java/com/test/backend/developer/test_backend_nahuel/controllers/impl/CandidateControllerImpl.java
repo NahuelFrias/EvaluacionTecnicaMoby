@@ -35,7 +35,7 @@ public class CandidateControllerImpl implements CandidateController {
             candidateService.create(candidateDTO);
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (CandidateExistsException e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(), e);
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
     }
@@ -46,7 +46,7 @@ public class CandidateControllerImpl implements CandidateController {
         try {
             return new ResponseEntity<>(candidateService.update(candidateDTO), HttpStatus.OK);
         } catch (CandidateNotExistsException e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(),e);
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
     }
@@ -57,7 +57,7 @@ public class CandidateControllerImpl implements CandidateController {
         try {
             return new ResponseEntity<>(candidateService.findByDocument(candidateDoc), HttpStatus.OK);
         } catch (CandidateNotExistsException e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(),e);
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
     }
@@ -75,7 +75,7 @@ public class CandidateControllerImpl implements CandidateController {
             candidateService.delete(candidateId);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (CandidateNotExistsException e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(),e);
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
     }
