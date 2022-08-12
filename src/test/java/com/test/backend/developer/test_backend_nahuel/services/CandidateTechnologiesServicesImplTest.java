@@ -4,7 +4,6 @@ import com.test.backend.developer.test_backend_nahuel.exceptions.TechnologyExist
 import com.test.backend.developer.test_backend_nahuel.exceptions.TechnologyNotExistsException;
 import com.test.backend.developer.test_backend_nahuel.projections.CandidateTechnologiesProjection;
 import com.test.backend.developer.test_backend_nahuel.repositories.CandidateTechnologiesRepository;
-import com.test.backend.developer.test_backend_nahuel.repositories.TechnologyRepository;
 import com.test.backend.developer.test_backend_nahuel.services.impl.CandidateTechnologiesServicesImpl;
 import com.test.backend.developer.test_backend_nahuel.services.impl.TechnologyServiceImpl;
 import org.junit.jupiter.api.Disabled;
@@ -37,9 +36,6 @@ class CandidateTechnologiesServicesImplTest extends AbstractMvcTestServices {
 
     @Mock
     TechnologyServiceImpl technologyService;
-
-    @Mock
-    TechnologyRepository technologyRepository;
 
     @Nested
     class CreateTest {
