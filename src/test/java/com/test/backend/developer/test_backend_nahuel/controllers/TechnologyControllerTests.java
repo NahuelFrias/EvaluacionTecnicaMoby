@@ -1,7 +1,9 @@
 package com.test.backend.developer.test_backend_nahuel.controllers;
 
+import com.test.backend.developer.test_backend_nahuel.exceptions.CandidateNotExistsException;
 import com.test.backend.developer.test_backend_nahuel.exceptions.TechnologyExistsException;
 import com.test.backend.developer.test_backend_nahuel.exceptions.TechnologyNotExistsException;
+import com.test.backend.developer.test_backend_nahuel.models.views.CandidateDTO;
 import com.test.backend.developer.test_backend_nahuel.models.views.TechnologyDTO;
 import com.test.backend.developer.test_backend_nahuel.repositories.TechnologyRepository;
 import com.test.backend.developer.test_backend_nahuel.services.impl.TechnologyServiceImpl;
@@ -14,6 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.google.gson.Gson;
 import java.util.Optional;
 
+import static com.test.backend.developer.test_backend_nahuel.utils.TestEntityFactory.getCandidateDTO;
 import static com.test.backend.developer.test_backend_nahuel.utils.TestEntityFactory.getTechnology;
 import static com.test.backend.developer.test_backend_nahuel.utils.TestEntityFactory.getTechnologyDTO;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -28,6 +31,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 import static com.test.backend.developer.test_backend_nahuel.utils.TestEntityFactory.getTechnologyList;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class TechnologyControllerTests extends AbstractMVCTest {
@@ -63,6 +67,33 @@ class TechnologyControllerTests extends AbstractMVCTest {
                     .andExpect(status().isAccepted())
                     .andExpect(result -> assertThrows(TechnologyExistsException.class, () -> technologyService.create(technologyDto)));
             verify(technologyService, atLeastOnce()).create(any(TechnologyDTO.class));
+        }
+    }
+
+    @Nested
+    class UpdateTest {
+        @Test
+        void updateOkTest() throws Exception {
+            var technologyDto = getTechnologyDTO();
+            String technologyDtoJson = new Gson().toJson(getTechnologyDTO());
+            when(technologyService.update(technologyDto)).thenReturn(true);
+            mockMvc.perform(put("/ev-tec/technology/update")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(technologyDtoJson))
+                    .andExpect(status().isOk());
+            verify(technologyService, atLeastOnce()).update(any(TechnologyDTO.class));
+        }
+        @Test
+        void updateWhenTechnologyNotExistsTest() throws Exception {
+            doThrow(TechnologyNotExistsException.class).when(technologyService).update(getTechnologyDTO());
+            var technologyDto = getTechnologyDTO();
+            String technologyDtoJson = new Gson().toJson(getTechnologyDTO());
+            mockMvc.perform(put("/ev-tec/technology/update")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(technologyDtoJson))
+                    .andExpect(status().isAccepted())
+                    .andExpect(result -> assertThrows(TechnologyNotExistsException.class, () -> technologyService.update(technologyDto)));
+            verify(technologyService, atLeastOnce()).update(any(TechnologyDTO.class));
         }
     }
 

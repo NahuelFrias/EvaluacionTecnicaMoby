@@ -27,6 +27,7 @@ import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 
 import static com.test.backend.developer.test_backend_nahuel.utils.TestEntityFactory.getCandidate;
 import static com.test.backend.developer.test_backend_nahuel.utils.TestEntityFactory.getCandidateDTO;
@@ -71,6 +72,33 @@ class CandidateControllerTests extends AbstractMVCTest {
                     .andExpect(status().isAccepted())
                     .andExpect(result -> assertThrows(CandidateExistsException.class, () -> candidateService.create(candidateDto)));
             verify(candidateService, atLeastOnce()).create(any(CandidateDTO.class));
+        }
+    }
+
+    @Nested
+    class UpdateTest {
+        @Test
+        void updateOkTest() throws Exception {
+            var candidateDto = getCandidateDTO();
+            String candidateDtoJson = new Gson().toJson(getCandidateDTO());
+            when(candidateService.update(candidateDto)).thenReturn(true);
+            mockMvc.perform(put("/ev-tec/candidate/update")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(candidateDtoJson))
+                    .andExpect(status().isOk());
+            verify(candidateService, atLeastOnce()).update(any(CandidateDTO.class));
+        }
+        @Test
+        void updateWhenCandidateNotExistsTest() throws Exception {
+            doThrow(CandidateNotExistsException.class).when(candidateService).update(getCandidateDTO());
+            var candidateDto = getCandidateDTO();
+            String candidateDtoJson = new Gson().toJson(getCandidateDTO());
+            mockMvc.perform(put("/ev-tec/candidate/update")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(candidateDtoJson))
+                    .andExpect(status().isAccepted())
+                    .andExpect(result -> assertThrows(CandidateNotExistsException.class, () -> candidateService.update(candidateDto)));
+            verify(candidateService, atLeastOnce()).update(any(CandidateDTO.class));
         }
     }
 

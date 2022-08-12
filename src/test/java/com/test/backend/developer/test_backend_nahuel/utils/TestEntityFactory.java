@@ -35,6 +35,13 @@ public class TestEntityFactory {
                 .birthDate(null)
                 .build();
     }
+    public static CandidateDTO getCandidateDniDuplicatedDto() {
+        return CandidateDTO.builder()
+                .id(2L)
+                .documentType(DocumentType.DNI)
+                .numDocument("12345678")
+                .build();
+    }
 
     public static CandidateDTO getCandidateDTOWithoutDni() {
         return CandidateDTO.builder()
